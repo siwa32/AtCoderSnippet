@@ -1,0 +1,17 @@
+{
+    "name": "iwase/at-coder-snippet",
+    "authors": [
+        {
+            "name": "IWASE Shigeaki",
+            "email": "siwa32@gmail.com"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "scripts": {
+        "phpunit": [
+            "./vendor/bin/phpunit"
+        ]
+    }
+}
