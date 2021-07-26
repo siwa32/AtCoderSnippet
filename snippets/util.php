@@ -11,3 +11,21 @@ function swap(&$a, &$b): void
     $a = $b;
     $b = $tmp;
 }
+
+function change_max(&$a, $b): bool
+{
+    if ($a < $b) {
+        $a = $b;
+        return true;
+    }
+    return false;
+}
+
+function change_min(&$a, $b): bool
+{
+    if ($a > $b) {
+        $a = $b;
+        return true;
+    }
+    return false;
+}
