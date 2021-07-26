@@ -1,0 +1,42 @@
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - '**.php'
+      - 'phpunit.xml'
+
+env:
+  NODE_VERSION: '16.x'
+  PHP_VERSION: '7.4'
+
+jobs:
+  CI:
+    name: Continuous Integration
+    # refs. https://github.com/actions/virtual-environments/tree/main/images/linux
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: bcmath, gmp
+          ini-values: memory_limit=-1
+          tools: pecl, composer
+          coverage: none
+
+      - name: tools version
+        run: |
+          php -v
+          composer -V
+
+      - name: composer install
+        shell: bash
+        run: composer install --prefer-dist --no-progress
+
+      - name: phpunit
+        shell: bash
+        run: php ./vendor/bin/phpunit
