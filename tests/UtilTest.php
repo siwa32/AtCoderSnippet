@@ -124,4 +124,58 @@ class UtilTest extends TestCase
         self::assertThat($actual, self::equalTo(8));
     }
 
+    function testLowerBound()
+    {
+        self::assertThat(lower_bound([1, 3, 5, 5, 6, 10], 5), self::equalTo(2));
+        self::assertThat(lower_bound([1, 3, 5, 5, 6, 8, 10], 7), self::equalTo(5));
+        self::assertThat(lower_bound([1, 3, 5, 5, 6, 8, 10], 0), self::equalTo(0));
+        self::assertThat(lower_bound([1, 3, 5, 5, 6, 8, 10], 1), self::equalTo(0));
+        self::assertThat(lower_bound([1, 3, 5, 5, 6, 8, 10], 10), self::equalTo(6));
+        self::assertThat(lower_bound([6], 6), self::equalTo(0));
+        self::assertThat(lower_bound([6, 7], 7), self::equalTo(1));
+    }
+
+    function testLowerBound_見つからない場合()
+    {
+        self::assertThat(lower_bound([1, 3, 5, 5, 6, 8, 10], 11), self::isFalse());
+        self::assertThat(lower_bound([1, 3], 4), self::isFalse());
+        self::assertThat(lower_bound([3], 4), self::isFalse());
+        self::assertThat(lower_bound([], 1), self::isFalse());
+    }
+
+    function testLowerBound_開始位置指定する場合()
+    {
+        self::assertThat(lower_bound([1, 3, 5, 5, 6, 10], 5, 3), self::equalTo(3));
+        self::assertThat(lower_bound([1, 3, 5, 5, 6, 8, 10], 7, 5), self::equalTo(5));
+        self::assertThat(lower_bound([1, 3, 5, 5, 6, 8, 10], 0, 6), self::equalTo(6));
+        self::assertThat(lower_bound([1, 3, 5, 5, 6, 8, 10], 1, 7), self::isFalse());
+    }
+
+    function testUpperBound()
+    {
+        self::assertThat(upper_bound([1, 3, 5, 6, 8, 10], 5), self::equalTo(3));
+        self::assertThat(upper_bound([1, 3, 5, 5, 6, 8, 10], 7), self::equalTo(5));
+        self::assertThat(upper_bound([1, 3, 5, 5, 6, 8, 10], 0), self::equalTo(0));
+        self::assertThat(upper_bound([1, 3, 5, 5, 6, 8, 10], 1), self::equalTo(1));
+        self::assertThat(upper_bound([1], 0), self::equalTo(0));
+        self::assertThat(upper_bound([1, 2], 1), self::equalTo(1));
+    }
+
+    function testUpperBound_見つからない場合()
+    {
+        self::assertThat(upper_bound([1, 3, 5, 6, 8, 10], 10), self::isFalse());
+        self::assertThat(upper_bound([1, 3, 5, 5, 6, 8, 10], 11), self::isFalse());
+        self::assertThat(upper_bound([8], 8), self::isFalse());
+        self::assertThat(upper_bound([8, 9], 9), self::isFalse());
+        self::assertThat(upper_bound([], 1), self::isFalse());
+    }
+
+    function testUpperBound_開始位置を指定する場合()
+    {
+        self::assertThat(upper_bound([1, 3, 5, 6, 8, 10], 5, 4), self::equalTo(4));
+        self::assertThat(upper_bound([1, 3, 5, 5, 6, 8, 10], 7, 7), self::isFalse());
+        self::assertThat(upper_bound([1, 3, 5, 5, 6, 8, 10], 0, 6), self::equalTo(6));
+        self::assertThat(upper_bound([1, 3, 5, 5, 6, 8, 10, 13], 4, 3), self::equalTo(3));
+        self::assertThat(upper_bound([1], 0, 0), self::equalTo(0));
+    }
 }

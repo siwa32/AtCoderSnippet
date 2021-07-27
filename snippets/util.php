@@ -67,3 +67,82 @@ function array_count_if(array $list, $valueOrCompare): int
     }
     return $cnt;
 }
+
+/**
+ * 指定された要素以上の値が現れる最初の位置のインデックスを取得する
+ * <code>
+ * $list = [1, 3, 5, 5, 6, 8, 10];
+ * lower_bound($list, 5);// => 2
+ * lower_bound($list, 5, 3);// => 3
+ * lower_bound($list, 15);// => false
+ * </code>
+ *
+ * @param array $list 昇順ソート済配列
+ * @param $key
+ * @param int $start 配列の検索範囲開始位置
+ * @return false|int 該当要素のキー値
+ *      $key 以上の要素が無い場合はfalse
+ */
+function lower_bound(array $list, $key, int $start = 0)
+{
+    $l = $start;
+    $r = count($list);
+    if ($r === 0) {
+        return false;// 空配列
+    }
+    if ($list[$r - 1] < $key || $r <= $l) {
+        // $key以上の要素無し
+        return false;
+    }
+    while (true) {
+        $m = ($l + $r) >> 1;
+        if ($list[$m] < $key) {
+            $l = $m + 1;
+        } else {
+            $r = $m;
+            if ($r === $l) {
+                return $r;
+            }
+        }
+    }
+}
+
+/**
+ * 指定された要素より大きい値が現れる最初の位置のインデックスを取得する
+ * <code>
+ * $list = [1, 3, 5, 5, 6, 8, 10];
+ * upper_bound($list, 5);// => 4
+ * upper_bound($list, 4, 3);// => 3
+ * upper_bound($list, 10);// => false
+ * </code>
+ *
+ * @param array $list 昇順ソート済配列
+ * @param $key
+ * @param int $start 配列の検索範囲開始位置
+ * @return false|int 該当要素のキー値
+ *      $key より大きい要素が無い場合はfalse
+ */
+function upper_bound(array $list, $key, int $start = 0)
+{
+    $l = $start;
+    $r = count($list);
+    if ($r === 0) {
+        return false;// 空配列
+    }
+    if ($list[$r - 1] <= $key || $r <= $l) {
+        // $keyより大きい要素無し
+        return false;
+    }
+    while (true) {
+        $m = ($l + $r) >> 1;
+        if ($list[$m] <= $key) {
+            $l = $m + 1;
+        } else {
+            $r = $m;
+            if ($r === $l) {
+                return $r;
+            }
+        }
+    }
+}
+
