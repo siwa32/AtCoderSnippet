@@ -178,4 +178,75 @@ class UtilTest extends TestCase
         self::assertThat(upper_bound([1, 3, 5, 5, 6, 8, 10, 13], 4, 3), self::equalTo(3));
         self::assertThat(upper_bound([1], 0, 0), self::equalTo(0));
     }
+
+    function testConvertIntBase_0()
+    {
+        self::assertThat(convert_int_base(0, 2), self::equalTo('0'));
+        self::assertThat(convert_int_base(0, 3), self::equalTo('0'));
+        self::assertThat(convert_int_base(0, 4), self::equalTo('0'));
+        self::assertThat(convert_int_base(0, 8), self::equalTo('0'));
+        self::assertThat(convert_int_base(0, 9), self::equalTo('0'));
+        self::assertThat(convert_int_base(0, 13), self::equalTo('0'));
+        self::assertThat(convert_int_base(0, 16), self::equalTo('0'));
+    }
+
+    function testConvertIntBase_base10()
+    {
+        self::assertThat(convert_int_base(10, 10), self::equalTo('10'));
+        self::assertThat(convert_int_base(34572348, 10), self::equalTo('34572348'));
+        self::assertThat(convert_int_base(9223372036854775807, 10), self::equalTo('9223372036854775807'));
+    }
+
+    function testConvertIntBase_base2()
+    {
+        self::assertThat(convert_int_base(1, 2), self::equalTo('1'));
+        self::assertThat(convert_int_base(2, 2), self::equalTo('10'));
+        self::assertThat(convert_int_base(3, 2), self::equalTo('11'));
+        self::assertThat(convert_int_base(255, 2), self::equalTo('11111111'));
+        self::assertThat(convert_int_base(1023, 2), self::equalTo('1111111111'));
+        self::assertThat(convert_int_base(1024, 2), self::equalTo('10000000000'));
+        self::assertThat(convert_int_base(0b0111010101, 2), self::equalTo('111010101'));
+        self::assertThat(convert_int_base(0b111000101010111010101, 2), self::equalTo('111000101010111010101'));
+        self::assertThat(convert_int_base(0b111111111111111111111111111111111111111111111111111111111111111, 2), self::equalTo('111111111111111111111111111111111111111111111111111111111111111'));
+        self::assertThat(convert_int_base(9223372036854775807, 2), self::equalTo('111111111111111111111111111111111111111111111111111111111111111'));
+    }
+
+    function testConvertIntBase_base8()
+    {
+        self::assertThat(convert_int_base(1, 8), self::equalTo('1'));
+        self::assertThat(convert_int_base(2, 8), self::equalTo('2'));
+        self::assertThat(convert_int_base(8, 8), self::equalTo('10'));
+        self::assertThat(convert_int_base(0377, 8), self::equalTo('377'));
+        self::assertThat(convert_int_base(072351, 8), self::equalTo('72351'));
+        self::assertThat(convert_int_base(066341537462416, 8), self::equalTo('66341537462416'));
+        self::assertThat(convert_int_base(0777777777777777777777, 8), self::equalTo('777777777777777777777'));
+        self::assertThat(convert_int_base(9223372036854775807, 8), self::equalTo('777777777777777777777'));
+    }
+
+    function testConvertIntBase_base16()
+    {
+        self::assertThat(convert_int_base(1, 16), self::equalTo('1'));
+        self::assertThat(convert_int_base(2, 16), self::equalTo('2'));
+        self::assertThat(convert_int_base(16, 16), self::equalTo('10'));
+        self::assertThat(convert_int_base(255, 16), self::equalTo('ff'));
+        self::assertThat(convert_int_base(0xffff, 16), self::equalTo('ffff'));
+        self::assertThat(convert_int_base(0xc3a8611ee, 16), self::equalTo('c3a8611ee'));
+        self::assertThat(convert_int_base(0xc90acbb51423cc, 16), self::equalTo('c90acbb51423cc'));
+        self::assertThat(convert_int_base(0x7fffffffffffffff, 16), self::equalTo('7fffffffffffffff'));
+        self::assertThat(convert_int_base(9223372036854775807, 16), self::equalTo('7fffffffffffffff'));
+    }
+
+    function testConvertIntBase_base9()
+    {
+        self::assertThat(convert_int_base(1, 9), self::equalTo('1'));
+        self::assertThat(convert_int_base(2, 9), self::equalTo('2'));
+        self::assertThat(convert_int_base(9, 9), self::equalTo('10'));
+        self::assertThat(convert_int_base(80, 9), self::equalTo('88'));
+        self::assertThat(convert_int_base(81, 9), self::equalTo('100'));
+        self::assertThat(convert_int_base(intval('726143640372', 9), 9), self::equalTo('726143640372'));
+        self::assertThat(convert_int_base(intval('888888888888888', 9), 9), self::equalTo('888888888888888'));
+        self::assertThat(convert_int_base(intval('67404283172107811827', 9), 9), self::equalTo('67404283172107811827'));
+        self::assertThat(convert_int_base(9223372036854775807, 9), self::equalTo('67404283172107811827'));
+    }
+
 }

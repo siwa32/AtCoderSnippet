@@ -146,3 +146,41 @@ function upper_bound(array $list, $key, int $start = 0)
     }
 }
 
+/**
+ * 正の整数を指定した基数表記に変換する
+ *
+ * <code>
+ * convert_int_base(14387235, 10);// => '14387235'
+ * convert_int_base(3, 2);// => '11'
+ * convert_int_base(1024, 2);// => '10000000000'
+ * convert_int_base(8, 8);// => '10'
+ * convert_int_base(9, 9);// => '10'
+ * convert_int_base(80, 9);// => '88'
+ * convert_int_base(255, 16);// => 'ff'
+ * </code>
+ *
+ * @param int $value 10進整数 >= 0
+ * @param int $base 基数 [2, 16]
+ * @return string $value を $base進表記にした文字列
+ */
+function convert_int_base(int $value, int $base): string
+{
+    assert($value >= 0);
+    assert(2 <= $base && $base <= 16);
+
+    if ($value === 0) {
+        return '0';
+    }
+    if ($base === 10) {
+        return (string)$value;// 10進数表記に変更（10進→10進）
+    }
+
+    static $digit = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
+    $ret = '';
+    while ($value > 0) {
+        $rem = $value % $base;
+        $ret = $digit[$rem] . $ret;
+        $value = intdiv($value, $base);
+    }
+    return $ret;
+}
