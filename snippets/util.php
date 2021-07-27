@@ -29,3 +29,13 @@ function change_min(&$a, $b): bool
     }
     return false;
 }
+
+function array_flatten(array $a): array
+{
+    $ret = [];
+    array_walk_recursive($a, function($a) use (&$ret) {
+        $ret[] = $a;
+    });
+    return $ret;
+}
+

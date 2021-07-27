@@ -81,4 +81,12 @@ class UtilTest extends TestCase
         self::assertThat(change_min($a, 100), self::isFalse());
         self::assertThat($a, self::equalTo(100));
     }
+
+    function testArrayFlatten()
+    {
+        self::assertThat(array_flatten([1, 3, 5, 5, 6, 8, 10]), self::equalTo([1, 3, 5, 5, 6, 8, 10]));
+        self::assertThat(array_flatten([1, [3, 5], 5, [6, 8], 10]), self::equalTo([1, 3, 5, 5, 6, 8, 10]));
+        self::assertThat(array_flatten([1, [3, 5, [5, 6, 8], 10]]), self::equalTo([1, 3, 5, 5, 6, 8, 10]));
+        self::assertThat(array_flatten([]), self::equalTo([]));
+    }
 }
