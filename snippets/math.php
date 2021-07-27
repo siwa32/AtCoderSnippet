@@ -95,3 +95,36 @@ function is_prime(int $n): bool
     }
     return true;
 }
+
+/**
+ * 素因数分解
+ *
+ * <code>
+ * // example
+ * prime_factor(12);// => [2 => 2, 3 => 1]
+ * prime_factor(1000000000000);// => [2 => 12, 5 => 12]
+ *
+ * @param int $natural 2以上の自然数
+ * @return array [素数 => 乗数, 素数 => 乗数, ...]
+ */
+function prime_factor(int $natural)
+{
+    assert($natural >= 2);
+
+    $ret = [];
+    $limit = (int)sqrt($natural);
+    for ($i = 2; $i <= $limit; ++$i) {
+        if ($natural % $i !== 0) {
+            continue;
+        }
+        $ret[$i] = 0;
+        while ($natural % $i === 0) {
+            $natural /= $i;
+            $ret[$i]++;
+        }
+    }
+    if ($natural !== 1) {
+        $ret[$natural] = 1;
+    }
+    return $ret;
+}

@@ -103,4 +103,14 @@ class MathTest extends TestCase
         self::assertThat(is_prime(99999997), self::isFalse());
         self::assertThat(is_prime(1000000000000003), self::isFalse());
     }
+
+    function testPrimeFactor()
+    {
+        self::assertThat(prime_factor(2), self::equalTo([2 => 1]));
+        self::assertThat(prime_factor(12), self::equalTo([2 => 2, 3 => 1]));
+        self::assertThat(prime_factor(13), self::equalTo([13 => 1]));
+        self::assertThat(prime_factor(93527), self::equalTo([7 => 1, 31 => 1, 431 => 1]));
+        self::assertThat(prime_factor(3439198374012), self::equalTo([2 => 2, 3 => 3, 617 => 1, 51611717 => 1]));
+        self::assertThat(prime_factor(1000000000000), self::equalTo([2 => 12, 5 => 12]));
+    }
 }
