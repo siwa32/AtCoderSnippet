@@ -184,3 +184,39 @@ function convert_int_base(int $value, int $base): string
     }
     return $ret;
 }
+
+/**
+ * 指定した値で1が立っている数を数える
+ * @param int $v
+ * @return int 1が立っている数
+ */
+function popcount(int $v): int
+{
+    $v = $v - (($v >> 1) & 0x5555555555555555);
+    $v = ($v & 0x3333333333333333) + (($v >> 2) & 0x3333333333333333);
+    $v = ($v + ($v >> 4)) & 0x0f0f0f0f0f0f0f0f;
+    $v = $v + ($v >> 8);
+    $v = $v + ($v >> 16);
+    $v = $v + ($v >> 32);
+    return $v & 0x0000007f;
+}
+
+/**
+ * 最下位ビットから0が並ぶ数
+ * <code>
+ * tzcount(0);// => false
+ * tzcount(1);// => 0
+ * tzcount(0b010000);// => 4
+ * </code>
+ * @param int $v
+ * @return false|int 0の場合はfalse
+ */
+function tzcount(int $v)
+{
+    if ($v < 0) {
+        $v &= 0x7fffffffffffffff;
+        return $v === 0 ? 63 : popcount(~$v & ($v - 1));
+    } else {
+        return $v === 0 ? false : popcount(~$v & ($v - 1));
+    }
+}

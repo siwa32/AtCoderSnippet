@@ -249,4 +249,36 @@ class UtilTest extends TestCase
         self::assertThat(convert_int_base(9223372036854775807, 9), self::equalTo('67404283172107811827'));
     }
 
+    function testPopcount()
+    {
+        self::assertThat(popcount(0), self::equalTo(0));
+        self::assertThat(popcount(0b0001), self::equalTo(1));
+        self::assertThat(popcount(0b0101), self::equalTo(2));
+        self::assertThat(popcount(0b100000100111011), self::equalTo(7));
+        self::assertThat(popcount(0b11111111111111111111111111111111), self::equalTo(32));
+        self::assertThat(popcount(-1), self::equalTo(64));
+    }
+
+    function testTzcount()
+    {
+        self::assertThat(tzcount(0b00000000_01101010_00000000_00000001), self::equalTo(0));
+        self::assertThat(tzcount(0b00000000_01101010_00000000_00000010), self::equalTo(1));
+        self::assertThat(tzcount(0b00000000_01101010_00000000_01101010), self::equalTo(1));
+        self::assertThat(tzcount(0b00000000_01101000_00000000_00000000), self::equalTo(19));
+        self::assertThat(tzcount(0b01000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000), self::equalTo(62));
+    }
+
+    function testTzcount_最上位ビットが立っている場合()
+    {
+        self::assertThat(tzcount(-1), self::equalTo(0));
+        self::assertThat(tzcount(~0b01111111_11111111_11111111_11111111_11111111_11111111_11111111_11111110), self::equalTo(0));
+        self::assertThat(tzcount(~0b01111111_11111111_11111111_11111111_11111111_11111111_11111111_11111111), self::equalTo(63));
+        self::assertThat(tzcount(~0b01111111_11111111_11111111_11110011_11111111_11111111_10111111_11111111), self::equalTo(14));
+        self::assertThat(tzcount(~0b01111111_00000000_11111111_11110011_11111111_11111111_11111111_11111111), self::equalTo(34));
+    }
+
+    function testTzcount_0の場合()
+    {
+        self::assertThat(tzcount(0), self::isFalse(), "立っているビットが無い場合はfalse");
+    }
 }
