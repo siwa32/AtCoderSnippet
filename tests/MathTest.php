@@ -80,4 +80,27 @@ class MathTest extends TestCase
         self::assertThat(divisor(1000000000000003), self::equalTo($expect));
     }
 
+    function testIsPrime_素数()
+    {
+        self::assertThat(is_prime(2), self::isTrue());
+        self::assertThat(is_prime(3), self::isTrue());
+        self::assertThat(is_prime(5), self::isTrue());
+        self::assertThat(is_prime(7), self::isTrue());
+        self::assertThat(is_prime(11), self::isTrue());
+        self::assertThat(is_prime(97), self::isTrue());
+        self::assertThat(is_prime(683), self::isTrue());
+        self::assertThat(is_prime(2311), self::isTrue());
+        self::assertThat(is_prime(3571), self::isTrue());
+    }
+
+    function testIsPrime_素数ではない()
+    {
+        self::assertThat(is_prime(1), self::isFalse());
+        self::assertThat(is_prime(0), self::isFalse());
+        self::assertThat(is_prime(-1), self::isFalse());
+        self::assertThat(is_prime(36), self::isFalse());
+        self::assertThat(is_prime(15342392), self::isFalse());
+        self::assertThat(is_prime(99999997), self::isFalse());
+        self::assertThat(is_prime(1000000000000003), self::isFalse());
+    }
 }

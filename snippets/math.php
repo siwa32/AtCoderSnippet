@@ -72,3 +72,26 @@ function divisor(int $natural, bool $sorted = true): array
     return $ret;
 }
 
+/**
+ * 素数判定する
+ *
+ * @param int $n 整数
+ * @return bool 素数ならtrue
+ */
+function is_prime(int $n): bool
+{
+    if ($n === 2) {
+        return true;
+    }
+    if ($n <= 1 || ($n & 0b01) === 0) {
+        return false;
+    }
+
+    $limit = (int)sqrt($n);
+    for ($i = 3; $i <= $limit; $i += 2) {
+        if ($n % $i === 0) {
+            return false;
+        }
+    }
+    return true;
+}
