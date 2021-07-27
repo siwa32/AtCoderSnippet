@@ -89,4 +89,39 @@ class UtilTest extends TestCase
         self::assertThat(array_flatten([1, [3, 5, [5, 6, 8], 10]]), self::equalTo([1, 3, 5, 5, 6, 8, 10]));
         self::assertThat(array_flatten([]), self::equalTo([]));
     }
+
+    function testArrayCountIf_配列の要素が整数の場合()
+    {
+        self::assertThat(array_count_if([1, 3, 4, 7, 123, 63246, 2, 53, 1, 0, null], 1), self::equalTo(2));
+        self::assertThat(array_count_if([1, 3, 4, 7, 123, 63246, 2, 53, 1, 0, null], 0), self::equalTo(1));
+        self::assertThat(array_count_if([1, 3, 4, 7, 123, 63246, 2, 53, 1, 0, null], "1"), self::equalTo(0));
+        self::assertThat(array_count_if([1, 3, 4, 7, 123, 63246, 2, 53, 1, 0, null], -8), self::equalTo(0));
+        self::assertThat(array_count_if([1, 3, 4, 7, 123, 63246, 2, 53, 1, 0, null], 2.0), self::equalTo(0));
+    }
+
+    function testArrayCountIf_配列の要素が文字列の場合()
+    {
+        self::assertThat(array_count_if(["1", "3", "4", "7", "123", "63246", "2", "53", "1", "0", null], "1"), self::equalTo(2));
+        self::assertThat(array_count_if(["1", "3", "4", "7", "123", "63246", "2", "53", "1", "0", null], 1), self::equalTo(0));
+        self::assertThat(array_count_if(["1", "3", "4", "7", "123", "63246", "2", "53", "1", "0", null], ""), self::equalTo(0));
+        self::assertThat(array_count_if(["1", "3", "4", "7", "123", "63246", "2", "53", "1", "0", null], "abc"), self::equalTo(0));
+    }
+
+    function testArrayCountIf_配列の要素が真偽値の場合()
+    {
+        self::assertThat(array_count_if([true, true, false, false, true], true), self::equalTo(3));
+        self::assertThat(array_count_if([true, true, false, false, true], false), self::equalTo(2));
+        self::assertThat(array_count_if([true, true, false, false, true], 1), self::equalTo(0));
+        self::assertThat(array_count_if([true, true, false, false, true], 0), self::equalTo(0));
+        self::assertThat(array_count_if([true, true, false, false, true], null), self::equalTo(0));
+    }
+
+    function testArrayCountIf_比較関数を渡す場合()
+    {
+        $actual = array_count_if([1, 3, 4, 7, null, 123, 63246, 2, 53, 1, 0, true], function ($item) {
+            return !is_null($item) && $item < 100;
+        });
+        self::assertThat($actual, self::equalTo(8));
+    }
+
 }
