@@ -49,4 +49,35 @@ class MathTest extends TestCase
         self::assertThat(lcm(17386, 17386), self::equalTo(17386));
         self::assertThat(lcm(111, 157), self::equalTo(111 * 157));
     }
+
+    function testDivisor()
+    {
+        self::assertThat(divisor(1), self::equalTo([1]));
+        self::assertThat(divisor(2), self::equalTo([1, 2]));
+        self::assertThat(divisor(36), self::equalTo([1, 2, 3, 4, 6, 9, 12, 18, 36]));
+        self::assertThat(divisor(97), self::equalTo([1, 97]));
+
+        $expect = [
+            1, 2, 4, 5, 8, 10, 16, 20, 25, 32, 40, 50, 64, 80,
+            100, 125, 128, 160, 200, 250, 256, 320, 400, 500, 625, 640, 800,
+            1000, 1250, 1280, 1600, 2000, 2500, 3125, 3200, 4000, 5000, 6250, 6400, 8000,
+            10000, 12500, 15625, 16000, 20000, 25000, 31250, 32000, 40000, 50000, 62500, 78125, 80000,
+            100000, 125000, 156250, 160000, 200000, 250000, 312500, 390625, 400000, 500000, 625000, 781250, 800000,
+            1000000, 1250000, 1562500, 2000000, 2500000, 3125000, 4000000, 5000000, 6250000,
+            10000000, 12500000, 20000000, 25000000, 50000000,
+            100000000
+        ];
+        self::assertThat(divisor(100000000), self::equalTo($expect));
+
+        $expect = [
+            1, 1297, 77101, 99999997
+        ];
+        self::assertThat(divisor(99999997), self::equalTo($expect));
+
+        $expect = [
+            1, 14902357, 67103479, 1000000000000003
+        ];
+        self::assertThat(divisor(1000000000000003), self::equalTo($expect));
+    }
+
 }
