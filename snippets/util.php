@@ -238,3 +238,16 @@ function median(array $sorted)
 
     return $sorted[$c >> 1];
 }
+
+/**
+ * 文字列の文字を昇順に並べ替えた文字列を取得する
+ * @param string $s
+ * @return string
+ */
+function str_sort(string $s): string
+{
+    $t = str_split($s);
+    sort($t);
+    return implode($t);
+}
+

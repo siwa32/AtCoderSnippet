@@ -281,6 +281,14 @@ class UtilTest extends TestCase
     {
         self::assertThat(tzcount(0), self::isFalse(), "立っているビットが無い場合はfalse");
     }
+
+    function testStrSort()
+    {
+        self::assertThat(str_sort("fwieha"), self::equalTo("aefhiw"));
+        self::assertThat(str_sort("aza72e39fz"), self::equalTo("2379aaefzz"));
+        self::assertThat(str_sort("abcdefghijklmn"), self::equalTo("abcdefghijklmn"));
+    }
+
     function testMedian()
     {
         $list = [1 ,2, 3, 4, 5];
