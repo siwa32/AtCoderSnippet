@@ -128,3 +128,52 @@ function prime_factor(int $natural)
     }
     return $ret;
 }
+
+/**
+ * xのn乗を繰り返し二乗法を使用して求める
+ * 0の0乗は未定義
+ *
+ * @param int $x
+ * @param int $n 正の整数
+ * @return int
+ */
+function xpow(int $x, int $n): int
+{
+    assert($n >= 0);
+
+    $ret = 1;
+    while ($n > 0) {
+        if ($n & 0b01) {
+            $ret *= $x;
+        }
+        $x *= $x;
+        $n >>= 1;
+    }
+    return $ret;
+}
+
+/**
+ * xのn乗をmodで割ったあまりを求める
+ * xのn乗は繰り返し二乗法を使用する
+ * 0の0乗は未定義
+ *
+ * @param int $x
+ * @param int $n 正の整数
+ * @param int $mod 0以外
+ * @return int
+ */
+function xpow_mod(int $x, int $n, int $mod): int
+{
+    assert($n >= 0);
+    assert($mod != 0);
+
+    $ret = 1;
+    while ($n > 0) {
+        if ($n & 0b01) {
+            $ret = ($ret * $x) % $mod;
+        }
+        $x = ($x * $x) % $mod;
+        $n >>= 1;
+    }
+    return $ret;
+}

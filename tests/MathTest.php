@@ -113,4 +113,34 @@ class MathTest extends TestCase
         self::assertThat(prime_factor(3439198374012), self::equalTo([2 => 2, 3 => 3, 617 => 1, 51611717 => 1]));
         self::assertThat(prime_factor(1000000000000), self::equalTo([2 => 12, 5 => 12]));
     }
+
+    function testXPow()
+    {
+        self::assertThat(xpow(36382334237429, 0), self::equalTo(1));
+        self::assertThat(xpow(0, 1), self::equalTo(0));
+        self::assertThat(xpow(2, 10), self::equalTo(2 ** 10));
+        self::assertThat(xpow(1, 12342361729), self::equalTo(1));
+        self::assertThat(xpow(2, 32), self::equalTo(2 ** 32));
+        self::assertThat(xpow(11, 9), self::equalTo(11 ** 9));
+        self::assertThat(xpow(3246, 5), self::equalTo(3246 ** 5));
+        self::assertThat(xpow(-1, 32673276), self::equalTo(1));
+        self::assertThat(xpow(-1, 32673277), self::equalTo(-1));
+        self::assertThat(xpow(-2, 10), self::equalTo((-2) ** 10));
+        self::assertThat(xpow(-5, 21), self::equalTo((-5) ** 21));
+    }
+
+    function testXPowMod()
+    {
+        self::assertThat(xpow_mod(36382334237429, 0, 1000000007), self::equalTo(1));
+        self::assertThat(xpow_mod(0, 1, 1000000007), self::equalTo(0));
+        self::assertThat(xpow_mod(2, 10, 7), self::equalTo(2));
+        self::assertThat(xpow_mod(1, 12342361729, 1000000007), self::equalTo(1));
+        self::assertThat(xpow_mod(2, 32, 8), self::equalTo(0));
+        self::assertThat(xpow_mod(11, 9, 13), self::equalTo((11 ** 9) % 13));
+        self::assertThat(xpow_mod(3246, 5, 3), self::equalTo((3246 ** 5) % 3));
+        self::assertThat(xpow_mod(-1, 32673276, 3), self::equalTo(1));
+        self::assertThat(xpow_mod(-1, 32673277, 3), self::equalTo(-1));
+        self::assertThat(xpow_mod(-2, 10, 3), self::equalTo(((-2) ** 10) % 3));
+        self::assertThat(xpow_mod(-5, 21, 3), self::equalTo(((-5) ** 21) % 3));
+    }
 }
