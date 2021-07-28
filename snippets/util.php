@@ -251,3 +251,43 @@ function str_sort(string $s): string
     return implode($t);
 }
 
+/**
+ * <code>
+ * $r = str_run_leength_encoding("aaaaddddhtaa");
+ * print_r($r)
+ *
+ * => [
+ *        ['a', 4],
+ *        ['d', 4],
+ *        ['h', 1],
+ *        ['t', 1],
+ *        ['a', 2],
+ *    ]
+ * </code>
+ * @param string $s マルチバイト文字を含まない文字列
+ * @return array
+ */
+function str_run_leength_encoding(string $s): array
+{
+    $slen = strlen($s);
+    if ($slen === 0) {
+        return [];
+    }
+
+    $res = [];
+    $c = 1;
+    $pre = $s[0];
+    for ($i = 1; $i < $slen; ++$i) {
+        if ($pre === $s[$i]) {
+            ++$c;
+        } else {
+            $res[] = [$pre, $c];
+
+            $pre = $s[$i];
+            $c = 1;
+        }
+    }
+    $res[] = [$pre, $c];
+
+    return $res;
+}

@@ -310,4 +310,38 @@ class UtilTest extends TestCase
         $list = [];
         self::assertThat(median($list), self::isFalse());
     }
+
+    function testStrRunLengthEncoding()
+    {
+        $expect = [
+            ['a', 4],
+            ['d', 4],
+            ['h', 1],
+            ['t', 1],
+            ['a', 2],
+        ];
+        self::assertThat(str_run_leength_encoding("aaaaddddhtaa"), self::equalTo($expect));
+    }
+
+    function testStrRunLengthEncoding_空文字の場合()
+    {
+        self::assertThat(str_run_leength_encoding(""), self::equalTo([]));
+    }
+
+    function testStrRunLengthEncoding_1文字の場合()
+    {
+        self::assertThat(str_run_leength_encoding("A"), self::equalTo([['A', 1]]));
+    }
+
+    function testStrRunLengthEncoding_全て違う文字()
+    {
+        $expect = [
+            ['z', 1],
+            ['x', 1],
+            ['c', 1],
+            ['v', 1],
+            ['b', 1],
+        ];
+        self::assertThat(str_run_leength_encoding("zxcvb"), self::equalTo($expect));
+    }
 }
