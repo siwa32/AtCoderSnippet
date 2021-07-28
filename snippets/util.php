@@ -220,3 +220,21 @@ function tzcount(int $v)
         return $v === 0 ? false : popcount(~$v & ($v - 1));
     }
 }
+
+/**
+ * 中央値を取得する
+ * @param array $sorted ソート済の配列
+ * @return false|float|int|mixed
+ */
+function median(array $sorted)
+{
+    $c = count($sorted);
+    if ($c === 0) {
+        return false;
+    }
+    if ($c % 2 === 0) {
+        return ($sorted[($c >> 1) - 1] + $sorted[$c >> 1]) / 2;
+    }
+
+    return $sorted[$c >> 1];
+}

@@ -281,4 +281,25 @@ class UtilTest extends TestCase
     {
         self::assertThat(tzcount(0), self::isFalse(), "立っているビットが無い場合はfalse");
     }
+    function testMedian()
+    {
+        $list = [1 ,2, 3, 4, 5];
+        self::assertThat(median($list), self::equalTo(3));
+        $list = [5, 4, 3, 2, 1];
+        self::assertThat(median($list), self::equalTo(3));
+    }
+
+    function testMedian_配列の要素数が偶数の場合()
+    {
+        $list = [1 ,2, 3, 4, 5, 6];
+        self::assertThat(median($list), self::equalTo(3.5));
+        $list = [6, 5, 4, 3, 2, 1];
+        self::assertThat(median($list), self::equalTo(3.5));
+    }
+
+    function testMedian_配列が空の場合()
+    {
+        $list = [];
+        self::assertThat(median($list), self::isFalse());
+    }
 }
