@@ -35,6 +35,7 @@ class InputValue
     public $B;
     public $C, $D;
     public $AB, $CD;
+    public int $H, $W;
 
     public static function get(): self
     {
@@ -42,6 +43,7 @@ class InputValue
 
         [$input->N] = self::inInt(1);
         [$input->N, $input->K] = self::inInt(2);
+        [$input->H, $input->W] = self::inInt(2);
         $input->A = self::inInt($input->N);
         $input->AB = self::inIntMat($input->N, 2);
         [$input->S] = self::inStr(1);
