@@ -143,4 +143,27 @@ class MathTest extends TestCase
         self::assertThat(xpow_mod(-2, 10, 3), self::equalTo(((-2) ** 10) % 3));
         self::assertThat(xpow_mod(-5, 21, 3), self::equalTo(((-5) ** 21) % 3));
     }
+
+    function testMCn()
+    {
+        self::markTestIncomplete();
+    }
+
+    function testMC2()
+    {
+        self::assertThat(mC2(1), self::equalTo(0));
+        self::assertThat(mC2(2), self::equalTo(1));
+        self::assertThat(mC2(31), self::equalTo(31 * 30 / 2));
+        self::assertThat(mC2(100000000), self::equalTo(100000000 * 99999999 / 2));
+        self::assertThat(mC2(2 ** 32), self::equalTo((2 ** 32) / 2 * (2 ** 32 - 1)));
+        self::assertThat(mC2(2 ** 32 - 1), self::equalTo((2 ** 32 - 1) * (2 ** 32 - 2) / 2));
+    }
+
+    function testFactorial()
+    {
+        self::assertThat(factorial(1), self::equalTo(1));
+        self::assertThat(factorial(2), self::equalTo(2));
+        self::assertThat(factorial(10), self::equalTo(3628800));
+        self::assertThat(factorial(20), self::equalTo(2432902008176640000));
+    }
 }

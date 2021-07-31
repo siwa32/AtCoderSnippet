@@ -177,3 +177,55 @@ function xpow_mod(int $x, int $n, int $mod): int
     }
     return $ret;
 }
+
+/**
+ * 組見合わせ mCn
+ * @param int $m
+ * @param int $n
+ * @return int
+ */
+function mCn(int $m, int $n): int
+{
+    static $memorize = [];
+
+    if ($m === 0 || $n === 0 || $m === $n) {
+        return 1;
+    }
+    if (isset($memorize[$m][$n])) {
+        return $memorize[$m][$n];
+    }
+
+    return $memorize[$m][$n] = combination($m - 1, $n - 1) + combination($m - 1, $n);
+}
+
+/**
+ * 組見合わせ mCn (n=2固定)
+ * @param int $m [1, 2**32]の範囲の整数
+ * @return int
+ */
+function mC2(int $m): int
+{
+    if ($m % 2 === 1) {
+        return $m * (($m - 1) / 2);
+    } else {
+        return ($m / 2) * ($m - 1);
+    }
+}
+
+/**
+ * 階乗
+ * @param int $n
+ * @return int
+ */
+function factorial(int $n): int
+{
+    static $memorize = [];
+
+    if ($n === 0 || $n === 1) {
+        return 1;
+    }
+    if (isset($memorize[$n])) {
+        return $memorize[$n];
+    }
+    return $memorize[$n] = $n * factorial($n - 1);
+}
