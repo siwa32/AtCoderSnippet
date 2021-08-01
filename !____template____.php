@@ -8,6 +8,8 @@ if (PHP_OS !== 'Linux') {
     ini_set('memory_limit', '512M');
 }
 
+const DBGOUT = STDERR;
+
 const SP = ' ';
 const LF = "\n";
 const YES = 'Yes';
@@ -150,27 +152,29 @@ trait StdInputTrait
  */
 function p(...$values): void
 {
+    $o = '';
     $sep = '';
     foreach ($values as $value) {
         if (is_array($value)) {
             // キーは出力しない
             // 2次元配列まで
             if (is_array(current($value))) {
-                echo empty($sep) ? '' : PHP_EOL;
+                $o .= (empty($sep) ? '' : PHP_EOL);
                 foreach ($value as $item) {
-                    echo '| ' . implode(',', $item) . ' |' . PHP_EOL;
+                    $o .= '| ' . implode(',', $item) . ' |' . PHP_EOL;
                 }
                 $sep = '';
             } else {
-                echo $sep . '[' . implode(',', $value) . ']';
+                $o .= $sep . '[' . implode(',', $value) . ']';
                 $sep = ', ';
             }
         } else {
-            echo $sep . $value;
+            $o .= $sep . $value;
             $sep = ', ';
         }
     }
-    echo empty($sep) ? '' : PHP_EOL;
+    $o .= (empty($sep) ? '' : PHP_EOL);
+    fwrite(DBGOUT, $o);
 }
 
 /**
@@ -180,10 +184,11 @@ function p(...$values): void
 function pp(...$values): void
 {
     foreach ($values as $value) {
-        print_r($value);
+        $o = print_r($value, true);
         if (!is_array($value) && !is_object($value)) {
-            echo PHP_EOL;
+            $o .= PHP_EOL;
         }
+        fwrite(DBGOUT, $o);
     }
 }
 
