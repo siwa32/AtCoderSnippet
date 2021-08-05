@@ -121,12 +121,12 @@ function bfs(AdjacencyListGraph $graph, int $start, callable $fn = null)
     $queue = new SplQueue();
 
     $visited = [];
-    $queue->enqueue([$start, 0]);
+    $queue->enqueue([$start, -1, 0]);
     $visited[$start] = true;// 訪問済みにする
     while (!$queue->isEmpty()) {
         $current = $queue->dequeue();
 
-        if (is_callable($fn) && !$fn($current[0], $current[1])) {
+        if (is_callable($fn) && !$fn($current[0], $current[1], $current[2])) {
             return;// 処理中止
         }
 
@@ -135,7 +135,7 @@ function bfs(AdjacencyListGraph $graph, int $start, callable $fn = null)
             if ($visited[$edge->to] ?? false) {
                 continue;// 訪問済み
             }
-            $queue->enqueue([$edge->to, $current[1] + 1]);
+            $queue->enqueue([$edge->to, $edge->from, $current[2] + 1]);
             $visited[$edge->to] = true;// 訪問済みにする
         }
     }

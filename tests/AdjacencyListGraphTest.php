@@ -128,18 +128,18 @@ class AdjacencyListGraphTest extends TestCase
         $g->addEdge(4, 6, 21);
         $g->addEdge(5, 6, 9);
         $params = [];
-        $g->bfs(0, function ($i, $dist) use (&$params) {
-            $params[] = [$i, $dist];
+        $g->bfs(0, function ($i, $from, $dist) use (&$params) {
+            $params[] = [$i, $from, $dist];
             return true;
         });
         $expectBfsOrders = [
-            [0, 0],
-            [1, 1],
-            [2, 1],
-            [3, 1],
-            [4, 2],
-            [5, 2],
-            [6, 3],
+            [0, -1, 0],
+            [1, 0, 1],
+            [2, 0, 1],
+            [3, 0, 1],
+            [4, 1, 2],
+            [5, 2, 2],
+            [6, 4, 3],
         ];
         self::assertThat($params, self::equalTo($expectBfsOrders));
     }
@@ -158,17 +158,17 @@ class AdjacencyListGraphTest extends TestCase
         $g->addEdge(4, 6, 21);
         $g->addEdge(5, 6, 9);
         $params = [];
-        $g->bfs(0, function ($i, $dist) use (&$params) {
-            $params[] = [$i, $dist];
+        $g->bfs(0, function ($i, $from, $dist) use (&$params) {
+            $params[] = [$i, $from, $dist];
             if ($i === 2) {
                 return false;// 中断
             }
             return true;
         });
         $expectBfsOrders = [
-            [0, 0],
-            [1, 1],
-            [2, 1],
+            [0, -1, 0],
+            [1, 0, 1],
+            [2, 0, 1],
         ];
         self::assertThat($params, self::equalTo($expectBfsOrders));
     }
