@@ -195,7 +195,7 @@ function mCn(int $m, int $n): int
         return $memorize[$m][$n];
     }
 
-    return $memorize[$m][$n] = combination($m - 1, $n - 1) + combination($m - 1, $n);
+    return $memorize[$m][$n] = mCn($m - 1, $n - 1) + mCn($m - 1, $n);
 }
 
 /**
