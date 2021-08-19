@@ -26,8 +26,7 @@ class Dijkstra
         $this->costs[$start] = 0;
         $this->path[$start] = null;
         while (!$queue->isEmpty()) {
-            $current = $queue->top();
-            $queue->next();
+            $current = $queue->extract();
 
             $edges = $graph->getEdges($current[0]);// 隣のノード
             foreach ($edges as $edge) {
