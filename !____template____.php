@@ -62,7 +62,6 @@ function solve(InputValue $input)
 {
     $ans = 0;
 
-
     return $ans;
 }
 
@@ -73,8 +72,9 @@ output(solve(InputValue::get()));
 /**
  * 出力
  * @param int|float|bool|string|array $ans
+ * @param bool $rawOutput 配列の場合に値をそのまま出力するか
  */
-function output($ans): void
+function output($ans, bool $rawOutput = false): void
 {
     if (is_bool($ans)) {
         echo ($ans ? YES : NO) . LF;
@@ -84,13 +84,24 @@ function output($ans): void
         if (empty($ans)) {
             return;
         }
+        $_fn = function (array $ans) use ($rawOutput): void {
+            if (!$rawOutput) {
+                if (is_bool($ans[0])) {
+                    $ans = array_map(fn ($e) => $e ? YES : NO, $ans);
+                }
+                if (is_float($ans[0])) {
+                    $ans = array_map(fn ($e) => sprintf("%.12f", $e), $ans);
+                }
+            }
+            echo implode(ANSWER_ARRAY_SEP, $ans) . LF;
+        };
         if (is_array(current($ans))) {
             // 2次元配列の場合
             foreach ($ans as $item) {
-                echo implode(SP, $item) . LF;
+                $_fn($item);
             }
         } else {
-            echo implode(ANSWER_ARRAY_SEP, $ans) . LF;
+            $_fn($ans);
         }
         return;
     }
