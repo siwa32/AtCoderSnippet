@@ -130,12 +130,56 @@ class AdjacencyListGraphTest extends TestCase
         self::assertThat($g->isNodeExists(1), self::isFalse());
         $g->addEdge(0, 1, 10);
         self::assertThat($g->isNodeExists(0), self::isTrue());
-        self::assertThat($g->isNodeExists(1), self::isFalse(), "行き先がないノードは存在しない扱い");
+        self::assertThat($g->isNodeExists(1), self::isTrue());
 
         self::assertThat($g->isNodeExists(2), self::isFalse());
         $g->addEdge(1, 2, 10);
         self::assertThat($g->isNodeExists(1), self::isTrue());
-        self::assertThat($g->isNodeExists(2), self::isFalse(), "行き先がないノードは存在しない扱い");
+        self::assertThat($g->isNodeExists(2), self::isTrue());
+    }
+
+    function testNodeCount_無向グラフの場合()
+    {
+        $g = new AdjacencyListGraph(false);
+        self::assertThat($g->nodeCount(), self::equalTo(0));
+        $g->addEdge(0, 1, 10);
+        self::assertThat($g->nodeCount(), self::equalTo(2));
+        $g->addEdge(1, 2, 10);
+        self::assertThat($g->nodeCount(), self::equalTo(3));
+    }
+
+    function testNodeCount_有効グラフの場合()
+    {
+        $g = new AdjacencyListGraph(true);
+        self::assertThat($g->nodeCount(), self::equalTo(0));
+        $g->addEdge(0, 1, 10);
+        self::assertThat($g->nodeCount(), self::equalTo(2));
+        $g->addEdge(1, 2, 10);
+        self::assertThat($g->nodeCount(), self::equalTo(3));
+    }
+
+    function testGetNodes_無向グラフの場合()
+    {
+        $g = new AdjacencyListGraph(false);
+        self::assertThat($g->getNodes(), self::isEmpty());
+
+        $g->addEdge(0, 1, 10);
+        $g->addEdge(1, 2, 10);
+        $actual = $g->getNodes();
+        sort($actual);
+        self::assertThat($actual, self::equalTo([0, 1, 2]));
+    }
+
+    function testGetNodes_有効グラフの場合()
+    {
+        $g = new AdjacencyListGraph(true);
+        self::assertThat($g->getNodes(), self::isEmpty());
+
+        $g->addEdge(0, 1, 10);
+        $g->addEdge(1, 2, 10);
+        $actual = $g->getNodes();
+        sort($actual);
+        self::assertThat($actual, self::equalTo([0, 1, 2]));
     }
 
     function testBfs()

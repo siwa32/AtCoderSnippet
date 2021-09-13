@@ -9,6 +9,7 @@ class AdjacencyListGraph
     private array $adjacencyList = [];
     private bool $isDirected;
     private int $edgeCount;
+    private array $nodes;
 
     /**
      * @param bool $isDirected 有向グラフならtrue, 無向グラフならfalse
@@ -17,6 +18,7 @@ class AdjacencyListGraph
     {
         $this->isDirected = $isDirected;
         $this->edgeCount = 0;
+        $this->nodes = [];
     }
 
     public function isDirected(): bool
@@ -45,6 +47,8 @@ class AdjacencyListGraph
             $this->adjacencyList[$to][] = new GraphEdge($to, $from, $cost);
             ++$this->edgeCount;
         }
+        $this->nodes[$from] = $from;
+        $this->nodes[$to] = $to;
     }
 
     /**
@@ -58,7 +62,24 @@ class AdjacencyListGraph
 
     public function isNodeExists(int $i): bool
     {
-        return isset($this->adjacencyList[$i]);
+        return isset($this->nodes[$i]);
+    }
+
+    /**
+     * ノード数
+     * @return int
+     */
+    public function nodeCount(): int
+    {
+        return count($this->nodes);
+    }
+
+    /**
+     * @return int[]
+     */
+    public function getNodes(): array
+    {
+        return array_values($this->nodes);
     }
 
     public function bfs(int $start, callable $fn = null): void
