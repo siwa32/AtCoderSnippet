@@ -40,6 +40,18 @@ class AdjacencyListGraphTest extends TestCase
         self::assertThat($g->countEdge(), self::equalTo(0));
         $g->addEdge(0, 1, 10);
         self::assertThat($g->countEdge(), self::equalTo(2));
+        $g->addEdge(1, 2, 10);
+        self::assertThat($g->countEdge(), self::equalTo(4));
+    }
+
+    function testCountEdge_同じノードに複数の辺がある無向グラフの場合()
+    {
+        $g = new AdjacencyListGraph(false);
+        self::assertThat($g->countEdge(), self::equalTo(0));
+        $g->addEdge(0, 1, 10);
+        $g->addEdge(0, 2, 10);
+        $g->addEdge(0, 3, 10);
+        self::assertThat($g->countEdge(), self::equalTo(6));
     }
 
     function testCountEdge_有向グラフの場合()
@@ -48,6 +60,18 @@ class AdjacencyListGraphTest extends TestCase
         self::assertThat($g->countEdge(), self::equalTo(0));
         $g->addEdge(0, 1, 10);
         self::assertThat($g->countEdge(), self::equalTo(1));
+        $g->addEdge(1, 2, 10);
+        self::assertThat($g->countEdge(), self::equalTo(2));
+    }
+
+    function testCountEdge_同じノードに複数の辺がある有向グラフの場合()
+    {
+        $g = new AdjacencyListGraph(true);
+        self::assertThat($g->countEdge(), self::equalTo(0));
+        $g->addEdge(0, 1, 10);
+        $g->addEdge(0, 2, 10);
+        $g->addEdge(0, 3, 10);
+        self::assertThat($g->countEdge(), self::equalTo(3));
     }
 
     function testAddEdge_無向グラフの場合()

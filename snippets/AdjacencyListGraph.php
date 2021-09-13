@@ -8,6 +8,7 @@ class AdjacencyListGraph
     /** @var GraphEdge[]  */
     private array $adjacencyList = [];
     private bool $isDirected;
+    private int $edgeCount;
 
     /**
      * @param bool $isDirected 有向グラフならtrue, 無向グラフならfalse
@@ -15,6 +16,7 @@ class AdjacencyListGraph
     public function __construct(bool $isDirected = true)
     {
         $this->isDirected = $isDirected;
+        $this->edgeCount = 0;
     }
 
     public function isDirected(): bool
@@ -24,7 +26,7 @@ class AdjacencyListGraph
 
     public function countEdge(): int
     {
-        return count($this->adjacencyList);
+        return $this->edgeCount;
     }
 
     /**
@@ -37,9 +39,11 @@ class AdjacencyListGraph
         assert($from !== $to, "自己ループは不可");
 
         $this->adjacencyList[$from][] = new GraphEdge($from, $to, $cost);
+        ++$this->edgeCount;
         if (!$this->isDirected) {
             // 無向グラフなので逆向きも定義
             $this->adjacencyList[$to][] = new GraphEdge($to, $from, $cost);
+            ++$this->edgeCount;
         }
     }
 
