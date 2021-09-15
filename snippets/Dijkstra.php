@@ -5,26 +5,24 @@
  */
 class Dijkstra
 {
-    public $costs = [];
-    public $path = [];
+    private array $costs;
+    private array $path;
+    private int $start;
 
-    public function reset(): void
+    private function __construct(int $start)
     {
-        $this->costs = [];
-        $this->path = [];
-    }
-
-    public function calc(int $start, int $goal, AdjacencyListGraph $graph)
-    {
-        if ($start === $goal) {
-            return 0;
-        }
-
-        $queue = new SplPriorityQueue();
-        $queue->insert([$start, null], 0);
+        $this->start = $start;
         $this->costs = [];
         $this->costs[$start] = 0;
         $this->path[$start] = null;
+    }
+
+    public static function calc(int $start, AdjacencyListGraph $graph): self
+    {
+        $thiz = new self($start);
+
+        $queue = new SplPriorityQueue();
+        $queue->insert([$start, null], 0);
         while (!$queue->isEmpty()) {
             $current = $queue->extract();
 
@@ -35,14 +33,19 @@ class Dijkstra
                 }
 
                 assert($edge->cost >= 0, "ダイクストラ法は負のコスト不可");
-                $cost = $this->costs[$current[0]] + $edge->cost;
-                if ($this->updateCost($edge, $cost)) {
+                $cost = $thiz->costs[$current[0]] + $edge->cost;
+                if ($thiz->updateCost($edge, $cost)) {
                     $queue->insert([$edge->to, $current[0]], -$cost);// [to, from]
                 }
             }
         }
 
-        return $this->costs[$goal] ?? false;
+        return $thiz;
+    }
+
+    public function getStart(): int
+    {
+        return $this->start;
     }
 
     /**
@@ -62,12 +65,15 @@ class Dijkstra
      * 指定ノードまでの経路
      *
      * @param int $node
-     * @return int[]
+     * @return int[]|false たどり着けない場合はfalse
      */
-    public function getPath(int $node): array
+    public function getPath(int $node)
     {
         assert(!empty($this->path));
 
+        if ($this->getCost($node) === false) {
+            return false;
+        }
         $path = [];
         $to = $node;
         while (true) {
