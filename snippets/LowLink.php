@@ -20,7 +20,7 @@ class LowLink
             throw new InvalidArgumentException();// 有向グラフは不可
         }
 
-        $thiz = new LowLink();
+        $thiz = new self();
 
         $used = [];
         $ord = [];
