@@ -229,3 +229,22 @@ function factorial(int $n): int
     }
     return $memorize[$n] = $n * factorial($n - 1);
 }
+
+/**
+ * aからbまでの和を求める
+ *
+ * @param int $a
+ * @param int $b
+ * @return int
+ */
+function sum_AtoB(int $a, int $b): int
+{
+    assert($a <= $b);
+
+    $ab = $a + $b;
+    if ($ab % 2 === 0) {
+        return ($ab / 2) * ($b - $a + 1);
+    } else {
+        return $ab * (($b - $a + 1) / 2);
+    }
+}

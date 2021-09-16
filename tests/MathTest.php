@@ -166,4 +166,22 @@ class MathTest extends TestCase
         self::assertThat(factorial(10), self::equalTo(3628800));
         self::assertThat(factorial(20), self::equalTo(2432902008176640000));
     }
+
+    function testSumAtoB()
+    {
+        self::assertThat(sum_AtoB(1, 10), self::equalTo(55));
+        self::assertThat(sum_AtoB(-4, 10), self::equalTo(45));
+        self::assertThat(sum_AtoB(-10, -1), self::equalTo(-55));
+        self::assertThat(sum_AtoB(100, 107), self::equalTo(828));
+        self::assertThat(sum_AtoB(1, 1000000000), self::equalTo(500000000500000000));
+        self::assertThat(sum_AtoB(1, 4294967295), self::equalTo(9223372034707292160));
+    }
+
+    function testSumAtoB_開始と終了が同じ場合()
+    {
+        self::assertThat(sum_AtoB(1, 1), self::equalTo(1));
+        self::assertThat(sum_AtoB(1000000000000, 1000000000000), self::equalTo(1000000000000));
+        self::assertThat(sum_AtoB(0, 0), self::equalTo(0));
+        self::assertThat(sum_AtoB(-1426362340, -1426362340), self::equalTo(-1426362340));
+    }
 }
