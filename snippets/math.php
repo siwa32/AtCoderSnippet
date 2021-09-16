@@ -248,3 +248,20 @@ function sum_AtoB(int $a, int $b): int
         return $ab * (($b - $a + 1) / 2);
     }
 }
+
+/**
+ * 等差数列の和
+ *
+ * @param int $a 初項
+ * @param int $n 項数
+ * @param int $d 公差
+ * @return int
+ */
+function sum_ap(int $a, int $n, int $d): int
+{
+    if ($n % 2 === 0) {
+        return $n * $a + ($n / 2) * ($n - 1) * $d;
+    } else {
+        return $n * $a + $n * (($n - 1) / 2) * $d;
+    }
+}

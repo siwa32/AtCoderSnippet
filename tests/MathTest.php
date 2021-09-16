@@ -184,4 +184,42 @@ class MathTest extends TestCase
         self::assertThat(sum_AtoB(0, 0), self::equalTo(0));
         self::assertThat(sum_AtoB(-1426362340, -1426362340), self::equalTo(-1426362340));
     }
+
+    function testSumAP()
+    {
+        self::assertThat(sum_ap(1, 10, 2), self::equalTo(100));
+        self::assertThat(sum_ap(77, 21, -4), self::equalTo(777));
+        self::assertThat(sum_ap(4, 409930701, 11), self::equalTo(924237487308036654));
+    }
+
+    function testSumAP_公差が1()
+    {
+        self::assertThat(sum_ap(1, 10, 1), self::equalTo(55));
+        self::assertThat(sum_ap(-4, 15, 1), self::equalTo(45));
+        self::assertThat(sum_ap(-10, 10, 1), self::equalTo(-55));
+        self::assertThat(sum_ap(100, 8, 1), self::equalTo(828));
+        self::assertThat(sum_ap(1, 1000000000, 1), self::equalTo(500000000500000000));
+        self::assertThat(sum_ap(1, 4294967295, 1), self::equalTo(9223372034707292160));
+    }
+
+    function testSumAP_公差が0()
+    {
+        self::assertThat(sum_ap(1, 1000, 0), self::equalTo(1000));
+        self::assertThat(sum_ap(678, 1000, 0), self::equalTo(678000));
+        self::assertThat(sum_ap(-45, 1000, 0), self::equalTo(-45000));
+    }
+
+    function testSumAP_公数が1()
+    {
+        self::assertThat(sum_ap(1, 1, 4), self::equalTo(1));
+        self::assertThat(sum_ap(3579733, 1, 4), self::equalTo(3579733));
+        self::assertThat(sum_ap(-3533, 1, 4), self::equalTo(-3533));
+    }
+
+    function testSumAP_公数が0()
+    {
+        self::assertThat(sum_ap(1, 0, 4), self::equalTo(0));
+        self::assertThat(sum_ap(3579733, 0, 4), self::equalTo(0));
+        self::assertThat(sum_ap(-3533, 0, 4), self::equalTo(0));
+    }
 }
