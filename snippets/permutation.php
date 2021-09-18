@@ -5,7 +5,7 @@
  * 指定した配列の要素を使用して出来る辞書順の次の順列
  *
  * <code>
- * foreach (next_permutation([1,2,3] as $perm) {
+ * foreach (next_permutation([1,2,3]) as $perm) {
  *     print_r($perm);
  * }
  *
@@ -17,18 +17,23 @@
  * => [3,2,1]
  * </code>
  *
- * @param array $sortedElements 昇順ソート済配列（重複要素ありは未対応）
+ * @param array $sortedElements 昇順ソート済配列
  * @return Generator
  */
 function next_permutation(array $sortedElements): Generator
 {
     $_permutation = function (array $sortedElements, int $i = 0, array $res = [], array $used = []) use (&$_permutation): Generator {
         $elementCount = count($sortedElements);
-        foreach ($sortedElements as $item) {
-            if ($used[$item] ?? false) {
+        $pre = null;
+        foreach ($sortedElements as $k => $item) {
+            if ($used[$k] ?? false) {
                 continue;
             }
-            $used[$item] = true;
+            if ($item === $pre) {
+                continue;
+            }
+            $used[$k] = true;
+            $pre = $item;
             $next = $res;
             $next[] = $item;
             if ($i === $elementCount - 1) {
@@ -38,7 +43,7 @@ function next_permutation(array $sortedElements): Generator
                     yield $result;
                 }
             }
-            $used[$item] = false;
+            $used[$k] = false;
         }
     };
     foreach ($_permutation($sortedElements) as $item) {
@@ -63,7 +68,7 @@ function next_permutation(array $sortedElements): Generator
  *    ]
  * </code>
  *
- * @param array $sortedElements 昇順ソート済配列（重複要素ありは未対応）
+ * @param array $sortedElements 昇順ソート済配列
  * @return array
  */
 function permutations(array $sortedElements): array
