@@ -17,7 +17,7 @@
  * => [3,2,1]
  * </code>
  *
- * @param array $sortedElements 昇順ソート済配列
+ * @param array $sortedElements 昇順ソート済配列（重複要素ありは未対応）
  * @return Generator
  */
 function next_permutation(array $sortedElements): Generator
@@ -63,7 +63,7 @@ function next_permutation(array $sortedElements): Generator
  *    ]
  * </code>
  *
- * @param array $sortedElements 昇順ソート済配列
+ * @param array $sortedElements 昇順ソート済配列（重複要素ありは未対応）
  * @return array
  */
 function permutations(array $sortedElements): array
