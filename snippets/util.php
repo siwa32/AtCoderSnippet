@@ -291,3 +291,19 @@ function str_run_leength_encoding(string $s): array
 
     return $res;
 }
+
+/**
+ * 座標圧縮
+ * FIXME 関数名が微妙
+ * <code>
+ * compress([3, 10, 4, 10]);// => [3 => 0, 4 => 1, 10 => 2]
+ * </code>
+ * @param array $items 1次元配列（値はキーとして使用可能であること）
+ * @return array [元値 => 圧縮値, ...]
+ */
+function range_compress(array $items): array
+{
+    $t = array_unique($items);
+    sort($t);
+    return array_flip($t);
+}

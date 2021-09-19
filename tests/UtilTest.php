@@ -344,4 +344,16 @@ class UtilTest extends TestCase
         ];
         self::assertThat(str_run_leength_encoding("zxcvb"), self::equalTo($expect));
     }
+
+    function testCompress()
+    {
+        self::assertThat(range_compress([2, 5, 9, 1, 10, 7]), self::equalTo([2 => 1, 5 => 2, 9 => 4, 1 => 0, 10 => 5, 7 => 3]));
+        self::assertThat(range_compress([2]), self::equalTo([2 => 0]));
+    }
+
+    function testCompress_値の重複がある場合()
+    {
+        self::assertThat(range_compress([2, 5, 9, 1, 10, 2]), self::equalTo([2 => 1, 5 => 2, 9 => 3, 1 => 0, 10 => 4]));
+        self::assertThat(range_compress([2, 2]), self::equalTo([2 => 0]));
+    }
 }
