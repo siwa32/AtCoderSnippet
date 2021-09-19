@@ -5,6 +5,7 @@ on:
     paths:
       - '**.php'
       - 'phpunit.xml'
+      - '!measure/**'
 
 env:
   NODE_VERSION: '16.x'
