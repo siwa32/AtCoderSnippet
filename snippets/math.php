@@ -292,3 +292,21 @@ function sum_ap(int $a, int $n, int $d): int
         return $n * $a + $n * (($n - 1) / 2) * $d;
     }
 }
+
+/**
+ * 拡張ユークリッド互除法
+ * @param int $a
+ * @param int $b
+ * @return int 最大公約数
+ */
+function gcd_ext(int $a, int $b, int& $x, int& $y): int
+{
+    if ($b === 0) {
+        $x = 1;
+        $y = 0;
+        return $a;
+    }
+    $g = gcd_ext($b, $a % $b, $y, $x);
+    $y -= intdiv($a, $b) * $x;
+    return $g;
+}

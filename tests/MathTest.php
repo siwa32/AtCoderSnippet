@@ -38,6 +38,7 @@ class MathTest extends TestCase
         self::assertThat(gcd(17386, 17386), self::equalTo(17386));
         self::assertThat(gcd(1, 17386), self::equalTo(1));
         self::assertThat(gcd(17386, 1), self::equalTo(1));
+        self::assertThat(gcd(0, 17386), self::equalTo(17386));
     }
 
     function testLcm()
@@ -238,5 +239,21 @@ class MathTest extends TestCase
         self::assertThat(sum_ap(1, 0, 4), self::equalTo(0));
         self::assertThat(sum_ap(3579733, 0, 4), self::equalTo(0));
         self::assertThat(sum_ap(-3533, 0, 4), self::equalTo(0));
+    }
+
+    function testGcdExt()
+    {
+        $x = $y = 0;
+        self::assertThat(gcd_ext(48, 32, $x, $y), self::equalTo(16));
+        self::assertThat($x, self::equalTo(1));
+        self::assertThat($y, self::equalTo(-1));
+
+        self::assertThat(gcd_ext(4122987234, 10 ** 9 + 7, $x, $y), self::equalTo(1));
+        self::assertThat($x, self::equalTo(369426681));
+        self::assertThat($y, self::equalTo(-1523141479));
+
+        self::assertThat(gcd_ext(0, 32, $x, $y), self::equalTo(32));
+        self::assertThat($x, self::equalTo(0));
+        self::assertThat($y, self::equalTo(1));
     }
 }

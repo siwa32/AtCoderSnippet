@@ -14,27 +14,50 @@ const LF = "\n";
 ///////////////////////////////////////////////////////////////////
 ///
 
-function gcd1(int $a, int $b): int
+function gcd_ext1(int $a, int $b, int& $x, int& $y): int
 {
-    $r = $a % $b;
-    return ($r === 0) ? $b : gcd1($b, $r);
+    if ($b === 0) {
+        $x = 1;
+        $y = 0;
+        return $a;
+    }
+    $g = gcd_ext1($b, $a % $b, $y, $x);
+    $y -= intdiv($a, $b) * $x;
+    return $g;
 }
 
-function gcd2(int $a, int $b): int
+function gcd_ext2(int $a, int $b, int& $x, int& $y): int
 {
+    $x = 1;
+    $y = 0;
+    $x1 = 0;
+    $y1 = 1;
     while (true) {
-        $t = $a % $b;
-        if ($t === 0) {
+        $r = $a % $b;
+        if ($r === 0) {
+            $x = $x1;
+            $y = $y1;
             return $b;
         }
+
+        $q = intdiv($a, $b);
+        $tx = $x - $q * $x1;
+        $ty = $y - $q * $y1;
         $a = $b;
-        $b = $t;
+        $b = $r;
+        $x = $x1;
+        $y = $y1;
+        $x1 = $tx;
+        $y1 = $ty;
     }
 }
 
-function gcd3(int $a, int $b): int
+function gcd_ext3(int $a, int $b, int& $x, int& $y)
 {
-    return gmp_intval(gmp_gcd($a, $b));
+    $r = gmp_gcdext($a, $b);
+    $x = gmp_intval($r['s']);
+    $y = gmp_intval($r['t']);
+    return gmp_intval($r['g']);
 }
 
 const COUNT = 100000;
@@ -46,15 +69,16 @@ function mesure()
     $values = sampleValues(COUNT);
 
     $f = [
-        "gcd1",
-        "gcd2",
-        "gcd3",
+        "gcd_ext1",
+        "gcd_ext2",
+        "gcd_ext3",
     ];
     foreach ($f as $fn) {
+        $x = $y = 0;
         if (function_exists($fn)) {
             $start = microtime(true);
             foreach ($values as $value) {
-                $fn($value[0], $value[1]);
+                $fn($value[0], $value[1], $x, $y);
             }
             $tick = microtime(true) - $start;
         } else {
@@ -64,13 +88,18 @@ function mesure()
     }
 
     {
-//        foreach ($values as $value) {
-//            sameAll(
-//                gcd1($value[0], $value[1]),
-//                gcd2($value[0], $value[1]),
-//                gcd3($value[0], $value[1]),
-//            );
-//        }
+        foreach ($values as $value) {
+            $x0 = $y0 = 0;
+            $x1 = $y1 = 0;
+            $x2 = $y2 = 0;
+            sameAll(
+                gcd_ext1($value[0], $value[1], $x0, $y0),
+                gcd_ext2($value[0], $value[1], $x1, $y1),
+                gcd_ext3($value[0], $value[1], $x2, $y2),
+            );
+            sameAll($x0, $x1, $x2);
+            sameAll($y0, $y1, $y2);
+        }
     }
 
     return $result;
