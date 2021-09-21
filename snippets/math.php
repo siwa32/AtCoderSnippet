@@ -180,22 +180,49 @@ function xpow_mod(int $x, int $n, int $mod): int
 
 /**
  * 組見合わせ mCn
- * @param int $m
+ * @param int $m 5000程度までの自然数
  * @param int $n
+ * @param int $mod 素数で無くて良い
  * @return int
  */
-function mCn(int $m, int $n): int
+function mCn(int $m, int $n, int $mod = PHP_INT_MAX): int
 {
-    static $memorize = [];
+    assert($m >= $n);
+    assert($m >= 0 && $n >= 0);
 
     if ($m === 0 || $n === 0 || $m === $n) {
         return 1;
     }
-    if (isset($memorize[$m][$n])) {
-        return $memorize[$m][$n];
+    if ($n === 1) {
+        return $m % $mod;
     }
 
-    return $memorize[$m][$n] = mCn($m - 1, $n - 1) + mCn($m - 1, $n);
+    static $memorize = [];
+
+    if (isset($memorize[$mod][$m][$n])) {
+        return $memorize[$mod][$m][$n];
+    }
+
+    $memorize[$mod][0][0] = 1;
+
+    $ps = $memorize[$mod]['size'] ?? 0;
+    for ($i = 1; $i <= $ps; ++$i) {
+        $memorize[$mod][$i][0] = 1;
+        for ($j = $ps + 1; $j <= $m; ++$j) {
+            $memorize[$mod][$i][$j] = ($memorize[$mod][$i - 1][$j - 1] ?? 0) + ($memorize[$mod][$i - 1][$j] ?? 0);
+            $memorize[$mod][$i][$j] %= $mod;
+        }
+    }
+    for ($i = $ps + 1; $i <= $m; ++$i) {
+        $memorize[$mod][$i][0] = 1;
+        for ($j = 1; $j <= $m; ++$j) {
+            $memorize[$mod][$i][$j] = ($memorize[$mod][$i - 1][$j - 1] ?? 0) + ($memorize[$mod][$i - 1][$j] ?? 0);
+            $memorize[$mod][$i][$j] %= $mod;
+        }
+    }
+    $memorize[$mod]['size'] = $m;
+
+    return $memorize[$mod][$m][$n];
 }
 
 /**
