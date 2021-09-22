@@ -179,28 +179,28 @@ function xpow_mod(int $x, int $n, int $mod): int
 }
 
 /**
- * 組見合わせ mCn
- * @param int $m 5000程度までの自然数
- * @param int $n
+ * 組見合わせ nCk
+ * @param int $n 5000程度までの自然数
+ * @param int $k
  * @param int $mod 素数で無くて良い
  * @return int
  */
-function mCn(int $m, int $n, int $mod = PHP_INT_MAX): int
+function nCk(int $n, int $k, int $mod = PHP_INT_MAX): int
 {
-    assert($m >= $n);
-    assert($m >= 0 && $n >= 0);
+    assert($n >= $k);
+    assert($n >= 0 && $k >= 0);
 
-    if ($m === 0 || $n === 0 || $m === $n) {
+    if ($n === 0 || $k === 0 || $n === $k) {
         return 1;
     }
-    if ($n === 1) {
-        return $m % $mod;
+    if ($k === 1) {
+        return $n % $mod;
     }
 
     static $memorize = [];
 
-    if (isset($memorize[$mod][$m][$n])) {
-        return $memorize[$mod][$m][$n];
+    if (isset($memorize[$mod][$n][$k])) {
+        return $memorize[$mod][$n][$k];
     }
 
     $memorize[$mod][0][0] = 1;
@@ -208,21 +208,21 @@ function mCn(int $m, int $n, int $mod = PHP_INT_MAX): int
     $ps = $memorize[$mod]['size'] ?? 0;
     for ($i = 1; $i <= $ps; ++$i) {
         $memorize[$mod][$i][0] = 1;
-        for ($j = $ps + 1; $j <= $m; ++$j) {
+        for ($j = $ps + 1; $j <= $n; ++$j) {
             $memorize[$mod][$i][$j] = ($memorize[$mod][$i - 1][$j - 1] ?? 0) + ($memorize[$mod][$i - 1][$j] ?? 0);
             $memorize[$mod][$i][$j] %= $mod;
         }
     }
-    for ($i = $ps + 1; $i <= $m; ++$i) {
+    for ($i = $ps + 1; $i <= $n; ++$i) {
         $memorize[$mod][$i][0] = 1;
-        for ($j = 1; $j <= $m; ++$j) {
+        for ($j = 1; $j <= $n; ++$j) {
             $memorize[$mod][$i][$j] = ($memorize[$mod][$i - 1][$j - 1] ?? 0) + ($memorize[$mod][$i - 1][$j] ?? 0);
             $memorize[$mod][$i][$j] %= $mod;
         }
     }
-    $memorize[$mod]['size'] = $m;
+    $memorize[$mod]['size'] = $n;
 
-    return $memorize[$mod][$m][$n];
+    return $memorize[$mod][$n][$k];
 }
 
 /**
@@ -273,6 +273,26 @@ function sum_AtoB(int $a, int $b): int
         return ($ab / 2) * ($b - $a + 1);
     } else {
         return $ab * (($b - $a + 1) / 2);
+    }
+}
+
+/**
+ * aからbまでの和を求める
+ *
+ * @param int $a
+ * @param int $b
+ * @param int $mod
+ * @return int
+ */
+function sum_AtoB_mod(int $a, int $b, int $mod): int
+{
+    assert($a <= $b);
+
+    $ab = $a + $b;
+    if ($ab % 2 === 0) {
+        return (($ab / 2) * ($b - $a + 1)) % $mod;
+    } else {
+        return ($ab * (($b - $a + 1) / 2)) % $mod;
     }
 }
 
