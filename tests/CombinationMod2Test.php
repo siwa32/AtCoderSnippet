@@ -11,6 +11,8 @@ class CombinationMod2Test extends TestCase
     public function providedTestData(): array
     {
         return [
+            [1, 1, 1],
+            [1000000000, 0, 1],
             [100000000, 100, 501016086],
             [1000000000, 1000, 624274358],
             [746384163, 41268, 251861790],
@@ -20,12 +22,12 @@ class CombinationMod2Test extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providedTestData
-     */
-    public function testNCk(int $n, int $k, int $expected)
+    public function testNCk()
     {
         $com = new CombinationMod2(self::MOD, 100000);
-        self::assertThat($com->nCk($n, $k), self::equalTo($expected));
+        foreach ($this->providedTestData() as $providedTestDatum) {
+            [$n, $k, $expected] = $providedTestDatum;
+            self::assertThat($com->nCk($n, $k), self::equalTo($expected));
+        }
     }
 }

@@ -16,15 +16,26 @@ class CombinationMod
     {
         $this->mod = $mod;
         $this->maxN = $maxN;
+
+        $this->fact[0] = 1;
+        $this->fact[1] = 1;
+        $this->factInv[0] = 1;
+        $this->factInv[1] = 1;
+        $this->inv[0] = 0;
+        $this->inv[1] = 1;
+        for ($i = 2; $i <= $maxN; ++$i) {
+            $this->fact[$i] = $i * $this->fact[$i - 1] % $mod;
+            $this->inv[$i] = $mod - $this->inv[$mod % $i] * intdiv($mod, $i) % $mod;
+            $this->factInv[$i] = $this->factInv[$i - 1] * $this->inv[$i] % $mod;
+        }
     }
 
     public function nCk(int $n, int $k): int
     {
-        assert($k <= $n);
-        assert($k >= 0);
-        // TODO
-        assert(false, "未実装");
-        return 0;
+        assert($n <= $this->maxN);
+        assert(0 <= $k && $k <= $n);
+
+        return $this->fact[$n] * ($this->factInv[$k] * $this->factInv[$n - $k] % $this->mod) % $this->mod;
     }
 }
 

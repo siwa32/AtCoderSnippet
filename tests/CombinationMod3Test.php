@@ -12,6 +12,7 @@ class CombinationMod3Test extends TestCase
     {
         // n = 1000000000
         return [
+            [0, 1],
             [2345, 105117609],
             [12, 18564],
             [788, 318692535],
@@ -21,12 +22,12 @@ class CombinationMod3Test extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider providedTestData
-     */
-    public function testNCk(int $k, int $expected)
+    public function testNCk()
     {
         $com = new CombinationMod3(1000000000, self::MOD, 100000);
-        self::assertThat($com->nCk($k), self::equalTo($expected));
+        foreach ($this->providedTestData() as $providedTestDatum) {
+            [$k, $expected] = $providedTestDatum;
+            self::assertThat($com->nCk($k), self::equalTo($expected));
+        }
     }
 }
