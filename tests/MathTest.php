@@ -257,4 +257,77 @@ class MathTest extends TestCase
         self::assertThat($x, self::equalTo(0));
         self::assertThat($y, self::equalTo(1));
     }
+
+    function testInvertMod()
+    {
+        $testCases = [
+            [1082396814608512382, 1000000007, 224931341],
+            [6413641274691060162, 1000000007, 760482925],
+            [2875776427995232122, 1000000007, 969716810],
+            [5810373188433159683, 1000000007, 394978623],
+            [7840560892044184555, 1000000007, 206522991],
+            [8466510191643191251, 1000000007, 64022179],
+            [1000000007, 17243, 4068],
+            [1000000007, 36964, 23515],
+            [1000000007, 99920, 6023],
+            [1000000007, 6246386609709379669, 4285395355313561777],
+            [1000000007, 770691046837931757, 191401036907760035],
+            [1000000007, 3484321914187639107, 1801768880583066914],
+            [36964, 991, 327],
+            [12189, 991, 327],
+            [99920, 991, 736],
+            [89255, 991, 61],
+            [50089, 991, 524],
+            [47570, 991, 496],
+            [123491, 2, 1],
+            [43783, 3, 1],
+        ];
+        foreach ($testCases as $testCase) {
+            [$x, $mod, $expected] = $testCase;
+            self::assertThat(invert_mod($x, $mod), self::equalTo($expected));
+        }
+    }
+
+    function testInvertMod_逆元が無い場合()
+    {
+        self::assertThat(invert_mod(7638877640969221628, 54478), self::equalTo(0));
+        self::assertThat(invert_mod(54478, 7638877640969221628), self::equalTo(0));
+        self::assertThat(invert_mod(5827554886110048175, 60116), self::equalTo(0));
+        self::assertThat(invert_mod(60116, 5827554886110048175), self::equalTo(0));
+        self::assertThat(invert_mod(1000000007, 1000000007), self::equalTo(0));
+        self::assertThat(invert_mod(4567894, 2), self::equalTo(0));
+        self::assertThat(invert_mod(2, 3456), self::equalTo(0));
+    }
+
+    function testInvertModPrime()
+    {
+        $testCases = [
+            [1082396814608512382, 1000000007, 224931341],
+            [6413641274691060162, 1000000007, 760482925],
+            [2875776427995232122, 1000000007, 969716810],
+            [5810373188433159683, 1000000007, 394978623],
+            [7840560892044184555, 1000000007, 206522991],
+            [8466510191643191251, 1000000007, 64022179],
+            [36964, 991, 327],
+            [12189, 991, 327],
+            [99920, 991, 736],
+            [89255, 991, 61],
+            [50089, 991, 524],
+            [47570, 991, 496],
+            [123491, 2, 1],
+            [43783, 3, 1],
+        ];
+        foreach ($testCases as $testCase) {
+            [$x, $mod, $expected] = $testCase;
+            self::assertThat(invert_mod_prime($x, $mod), self::equalTo($expected));
+        }
+    }
+
+    function testInvertModPrime_逆元が無い場合()
+    {
+        self::assertThat(invert_mod_prime(1982, 991), self::equalTo(0));
+        self::assertThat(invert_mod_prime(1000000007, 1000000007), self::equalTo(0));
+        self::assertThat(invert_mod_prime(4567894, 2), self::equalTo(0));
+        self::assertThat(invert_mod_prime(15327, 3), self::equalTo(0));
+    }
 }

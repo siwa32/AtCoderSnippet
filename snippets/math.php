@@ -331,3 +331,36 @@ function gcd_ext(int $a, int $b, int& $x, int& $y): int
     $y -= intdiv($a, $b) * $x;
     return $g;
 }
+
+/**
+ * xの逆元
+ * @param int $x modとは互いに素
+ * @param int $mod
+ * @return int 逆元が無い場合は0を返す
+ */
+function invert_mod(int $x, int $mod): int
+{
+    assert($mod >= 2);
+
+    $s = $t = 0;
+    if (gcd_ext($x, $mod, $s, $t) !== 1) {
+        return 0;// 互いに素では無い
+    };
+    return ($s < 0) ? (($mod + $s) % $mod) % $mod : $s % $mod;
+}
+
+/**
+ * xの逆元
+ * @param int $x $primeとは互いに素
+ * @param int $prime 素数 素数で無い場合は未定義
+ * @return int 逆元が無い場合は0を返す
+ */
+function invert_mod_prime(int $x, int $prime): int
+{
+    assert($prime >= 2);
+
+    if ($x % $prime === 0) {
+        return 0;
+    }
+    return xpow_mod($x, $prime - 2, $prime);
+}
