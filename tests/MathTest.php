@@ -143,6 +143,7 @@ class MathTest extends TestCase
         self::assertThat(xpow_mod(-1, 32673277, 3), self::equalTo(-1));
         self::assertThat(xpow_mod(-2, 10, 3), self::equalTo(((-2) ** 10) % 3));
         self::assertThat(xpow_mod(-5, 21, 3), self::equalTo(((-5) ** 21) % 3));
+        self::assertThat(xpow_mod(7844007021201716725, 1000000005, 1000000007), self::equalTo(6685840));
     }
 
     function testNCk()

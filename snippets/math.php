@@ -167,6 +167,7 @@ function xpow_mod(int $x, int $n, int $mod): int
     assert($n >= 0);
     assert($mod != 0);
 
+    $x %= $mod;
     $ret = 1;
     while ($n > 0) {
         if ($n & 0b01) {
