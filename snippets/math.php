@@ -186,7 +186,7 @@ function xpow_mod(int $x, int $n, int $mod): int
  * @param int $mod 素数で無くて良い
  * @return int
  */
-function nCk(int $n, int $k, int $mod = PHP_INT_MAX): int
+function nCk(int $n, int $k, int $mod): int
 {
     assert($n >= $k);
     assert($n >= 0 && $k >= 0);
