@@ -175,12 +175,38 @@ class MathTest extends TestCase
         self::assertThat(mC2(2 ** 32 - 1), self::equalTo((2 ** 32 - 1) * (2 ** 32 - 2) / 2));
     }
 
+    function testNCkModPrime()
+    {
+        $testCases = [
+            [1, 1, 1],
+            [1000000000, 0, 1],
+            [100000000, 100, 501016086],
+            [1000000000, 1000, 624274358],
+            [746384163, 41268, 251861790],
+            [1000000000, 1, 1000000000],
+            [1000000000, 10000, 514182778],
+            [999999999, 50000, 429939171],
+            [1000000000, 10000000, 845332812],
+        ];
+        foreach ($testCases as $testCase) {
+            [$n, $k, $expected] = $testCase;
+            self::assertThat(nCk_mod_prime($n, $k, 1000000007), self::equalTo($expected));
+        }
+    }
+
+    function testNPk()
+    {
+        self::markTestIncomplete();
+    }
+
     function testFactorial()
     {
-        self::assertThat(factorial(1), self::equalTo(1));
-        self::assertThat(factorial(2), self::equalTo(2));
-        self::assertThat(factorial(10), self::equalTo(3628800));
-        self::assertThat(factorial(20), self::equalTo(2432902008176640000));
+        self::assertThat(factorial(1, PHP_INT_MAX), self::equalTo(1));
+        self::assertThat(factorial(2, PHP_INT_MAX), self::equalTo(2));
+        self::assertThat(factorial(10, PHP_INT_MAX), self::equalTo(3628800));
+        self::assertThat(factorial(20, PHP_INT_MAX), self::equalTo(2432902008176640000));
+        self::assertThat(factorial(9388776, 1000000007), self::equalTo(561783844));
+        self::assertThat(factorial(10000000, 1000000007), self::equalTo(682498929));
     }
 
     function testSumAtoB()

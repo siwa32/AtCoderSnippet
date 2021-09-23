@@ -226,6 +226,16 @@ function nCk(int $n, int $k, int $mod): int
     return $memorize[$mod][$n][$k];
 }
 
+function nCk_mod_prime(int $n, int $k, int $prime): int
+{
+    assert($n >= $k);
+    assert($n >= 0 && $k >= 0);
+    assert($prime >= 2);
+
+    $k = min($k, $n - $k);
+    return nPk($n, $k, $prime) * invert_mod_prime(factorial($k, $prime), $prime) % $prime;
+}
+
 /**
  * 組見合わせ mCn (n=2固定)
  * @param int $m [1, 2**32]の範囲の整数
@@ -240,22 +250,31 @@ function mC2(int $m): int
     }
 }
 
+function nPk(int $n, int $k, int $mod): int
+{
+    $p = 1;
+    for ($i = 0; $i < $k; ++$i) {
+        $p *= ($n - $i);
+        $p %= $mod;
+    }
+    return $p;
+}
+
 /**
  * 階乗
- * @param int $n
+ * @param int $n 10000000程度まで
  * @return int
  */
-function factorial(int $n): int
+function factorial(int $n, int $mod): int
 {
-    static $memorize = [];
+    assert($n >= 0);
 
-    if ($n === 0 || $n === 1) {
-        return 1;
+    $fact = 1;
+    for ($i = 2; $i <= $n; ++$i) {
+        $fact *= $i;
+        $fact %= $mod;
     }
-    if (isset($memorize[$n])) {
-        return $memorize[$n];
-    }
-    return $memorize[$n] = $n * factorial($n - 1);
+    return $fact;
 }
 
 /**
