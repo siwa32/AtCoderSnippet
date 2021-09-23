@@ -310,9 +310,9 @@ function sum_AtoB_mod(int $a, int $b, int $mod): int
 
     $ab = $a + $b;
     if ($ab % 2 === 0) {
-        return (($ab / 2) * ($b - $a + 1)) % $mod;
+        return ((($ab / 2) % $mod) * (($b - $a + 1) % $mod)) % $mod;
     } else {
-        return ($ab * (($b - $a + 1) / 2)) % $mod;
+        return (($ab % $mod) * ((($b - $a + 1) / 2) % $mod)) % $mod;
     }
 }
 
