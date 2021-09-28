@@ -17,6 +17,7 @@ class WarshallFloyd
     {
         $this->size = $size;
         $this->isDirected = $isDirected;
+        $this->distance = array_fill(0, $size, array_fill(0, $size, null));
     }
 
     public function isDirected(): bool
@@ -52,7 +53,6 @@ class WarshallFloyd
 
     public function calc(): void
     {
-        $this->distance = [];
         for ($i = 0; $i < $this->size; ++$i) {
             $this->distance[$i][$i] = 0;
         }
@@ -60,9 +60,9 @@ class WarshallFloyd
         for ($k = 0; $k < $this->size; ++$k) {
             for ($i = 0; $i < $this->size; ++$i) {
                 for ($j = 0; $j < $this->size; ++$j) {
-                    $ij = $this->distance[$i][$j] ?? null;
-                    $ik = $this->distance[$i][$k] ?? null;
-                    $kj = $this->distance[$k][$j] ?? null;
+                    $ij = $this->distance[$i][$j];
+                    $ik = $this->distance[$i][$k];
+                    $kj = $this->distance[$k][$j];
                     if ($ij === null && $ik !== null && $kj !== null) {
                         $this->distance[$i][$j] = $ik + $kj;
                         $this->path[$i][$j] = $k;
