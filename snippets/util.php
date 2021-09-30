@@ -307,3 +307,20 @@ function range_compress(array $items): array
     sort($t);
     return array_flip($t);
 }
+
+/**
+ * ランダム文字列を生成する
+ * @param int $length 生成する文字列の長さ
+ * @param string $usable 使用する文字からなる文字列
+ * @return string
+ * @throws Exception
+ */
+function random_str(int $length, string $usable = 'abcdefghijklmnopqrstuvwxyz'): string
+{
+    $ret = '';
+    $clen = strlen($usable);
+    for ($i = 0; $i < $length; $i++) {
+        $ret .= $usable[random_int(0, $clen - 1)];
+    }
+    return $ret;
+}

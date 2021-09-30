@@ -356,4 +356,24 @@ class UtilTest extends TestCase
         self::assertThat(range_compress([2, 5, 9, 1, 10, 2]), self::equalTo([2 => 1, 5 => 2, 9 => 3, 1 => 0, 10 => 4]));
         self::assertThat(range_compress([2, 2]), self::equalTo([2 => 0]));
     }
+
+    function testRandomStr_文字列長()
+    {
+        self::assertThat(strlen(random_str(10, "abc")), self::equalTo(10));
+        self::assertThat(strlen(random_str(1, "abc")), self::equalTo(1));
+        self::assertThat(strlen(random_str(145, "ABC123")), self::equalTo(145));
+    }
+
+    function testRandomStr_指定した文字のみで構成される()
+    {
+        foreach (str_split(random_str(20, "abc")) as $ch) {
+            self::assertThat(strpos($ch, "abc"), self::greaterThanOrEqual(0));
+        }
+        foreach (str_split(random_str(10)) as $ch) {
+            self::assertThat(strpos($ch, "abcdefghijklmnopqrstuvwxyz"), self::greaterThanOrEqual(0));
+        }
+        foreach (str_split(random_str(20, "ABCDEFGH1234")) as $ch) {
+            self::assertThat(strpos($ch, "ABCDEFGH1234"), self::greaterThanOrEqual(0));
+        }
+    }
 }
