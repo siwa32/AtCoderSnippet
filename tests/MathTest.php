@@ -165,14 +165,14 @@ class MathTest extends TestCase
         self::assertThat(nCk(51936102, 1, 997), self::equalTo(51936102 % 997));
     }
 
-    function testMC2()
+    function testNC2()
     {
-        self::assertThat(mC2(1), self::equalTo(0));
-        self::assertThat(mC2(2), self::equalTo(1));
-        self::assertThat(mC2(31), self::equalTo(31 * 30 / 2));
-        self::assertThat(mC2(100000000), self::equalTo(100000000 * 99999999 / 2));
-        self::assertThat(mC2(2 ** 32), self::equalTo((2 ** 32) / 2 * (2 ** 32 - 1)));
-        self::assertThat(mC2(2 ** 32 - 1), self::equalTo((2 ** 32 - 1) * (2 ** 32 - 2) / 2));
+        self::assertThat(nC2(1), self::equalTo(0));
+        self::assertThat(nC2(2), self::equalTo(1));
+        self::assertThat(nC2(31), self::equalTo(31 * 30 / 2));
+        self::assertThat(nC2(100000000), self::equalTo(100000000 * 99999999 / 2));
+        self::assertThat(nC2(2 ** 32), self::equalTo((2 ** 32) / 2 * (2 ** 32 - 1)));
+        self::assertThat(nC2(2 ** 32 - 1), self::equalTo((2 ** 32 - 1) * (2 ** 32 - 2) / 2));
     }
 
     function testNCkModPrime()
@@ -225,6 +225,17 @@ class MathTest extends TestCase
         self::assertThat(sum_AtoB(1000000000000, 1000000000000), self::equalTo(1000000000000));
         self::assertThat(sum_AtoB(0, 0), self::equalTo(0));
         self::assertThat(sum_AtoB(-1426362340, -1426362340), self::equalTo(-1426362340));
+    }
+
+    function testSumAtoBMod()
+    {
+        $mod = 10 ** 9 + 7;
+        self::assertThat(sum_AtoB_mod(1, 10, 2), self::equalTo(1));
+        self::assertThat(sum_AtoB_mod(-4, 10, 3), self::equalTo(0));
+        self::assertThat(sum_AtoB_mod(-10, -1, $mod), self::equalTo(-55));
+        self::assertThat(sum_AtoB_mod(100, 107, $mod), self::equalTo(828));
+        self::assertThat(sum_AtoB_mod(1, 1000000000, $mod), self::equalTo(500000000500000000 % $mod));
+        self::assertThat(sum_AtoB_mod(1, 4294967295, $mod), self::equalTo(9223372034707292160 % $mod));
     }
 
     function testSumAP()

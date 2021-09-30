@@ -237,16 +237,16 @@ function nCk_mod_prime(int $n, int $k, int $prime): int
 }
 
 /**
- * 組見合わせ mCn (n=2固定)
- * @param int $m [1, 2**32]の範囲の整数
+ * 組見合わせ nCk (k=2固定)
+ * @param int $n [1, 2**32]の範囲の整数
  * @return int
  */
-function mC2(int $m): int
+function nC2(int $n): int
 {
-    if ($m % 2 === 1) {
-        return $m * (($m - 1) / 2);
+    if ($n % 2 === 1) {
+        return $n * (($n - 1) / 2);
     } else {
-        return ($m / 2) * ($m - 1);
+        return ($n / 2) * ($n - 1);
     }
 }
 
