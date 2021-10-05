@@ -41,7 +41,7 @@ class InputValue
 
     public static function get(): self
     {
-        $input = new InputValue();
+        $input = new self();
 
         [$input->N] = self::inInt(1);
         [$input->N, $input->K] = self::inInt(2);
@@ -84,13 +84,13 @@ function output($ans, bool $rawOutput = false): void
         if (empty($ans)) {
             return;
         }
-        $_fn = function (array $ans) use ($rawOutput): void {
+        $_fn = static function (array $ans) use ($rawOutput): void {
             if (!$rawOutput) {
                 if (is_bool($ans[0])) {
-                    $ans = array_map(fn ($e) => $e ? YES : NO, $ans);
+                    $ans = array_map(static fn ($e) => $e ? YES : NO, $ans);
                 }
                 if (is_float($ans[0])) {
-                    $ans = array_map(fn ($e) => sprintf("%.12f", $e), $ans);
+                    $ans = array_map(static fn ($e) => sprintf("%.12f", $e), $ans);
                 }
             }
             echo implode(ANSWER_ARRAY_SEP, $ans) . LF;
