@@ -2,8 +2,9 @@
 
 /**
  * トポロジカルソート
+ * 順序の制約を満たした上で可能な限り昇順、降順に並べる
  */
-class TopologicalSort
+class OrderedTopologicalSort
 {
     /** @var array<int|string, int[]|string[]> */
     private array $orderCondition;
@@ -54,24 +55,28 @@ class TopologicalSort
      *
      * @return array|null 制約条件でソートできない場合はnullを返す
      */
-    public function sort(): ?array
+    public function sort(bool $orderDesc = false): ?array
     {
         $ret = [];
 
-        $queue = new SplQueue();
+        if ($orderDesc) {
+            $queue = new SplMaxHeap();
+        } else {
+            $queue = new SplMinHeap();
+        }
         foreach ($this->items as $item) {
             if (($this->beforeCount[$item] ?? 0) === 0) {
                 // 前にしなければならない要素が無い
-                $queue->enqueue($item);
+                $queue->insert($item);
             }
         }
         while (!$queue->isEmpty()) {
-            $item = $queue->dequeue();
+            $item = $queue->extract();
             $ret[] = $item;
             foreach ($this->orderCondition[$item] ?? [] as $after) {
                 --$this->beforeCount[$after];
                 if ($this->beforeCount[$after] === 0) {
-                    $queue->enqueue($after);
+                    $queue->insert($after);
                 }
             }
         }
