@@ -86,10 +86,10 @@ function output($ans, bool $rawOutput = false): void
         }
         $_fn = static function (array $ans) use ($rawOutput): void {
             if (!$rawOutput) {
-                if (is_bool($ans[0])) {
+                if (is_bool(current($ans))) {
                     $ans = array_map(static fn ($e) => $e ? YES : NO, $ans);
                 }
-                if (is_float($ans[0])) {
+                if (is_float(current($ans))) {
                     $ans = array_map(static fn ($e) => sprintf("%.12f", $e), $ans);
                 }
             }
