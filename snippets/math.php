@@ -181,12 +181,38 @@ function xpow_mod(int $x, int $n, int $mod): int
 
 /**
  * 組見合わせ nCk
+ * @param int $n 100程度まで
+ * @param int $k 100程度まで
+ * @return int
+ */
+function nCk(int $n, int $k): int
+{
+    assert($n >= $k);
+    assert($n >= 0 && $k >= 0);
+
+    static $memorize = [];
+
+    if ($n === 0 || $k === 0 || $n === $k) {
+        return 1;
+    }
+    if ($k === 1) {
+        return $n;
+    }
+    if (isset($memorize[$n][$k])) {
+        return $memorize[$n][$k];
+    }
+
+    return $memorize[$n][$k] = nCk($n - 1, $k - 1) + nCk($n - 1, $k);
+}
+
+/**
+ * 組見合わせ nCk
  * @param int $n 5000程度までの自然数
  * @param int $k
  * @param int $mod 素数で無くて良い
  * @return int
  */
-function nCk(int $n, int $k, int $mod): int
+function nCk_mod(int $n, int $k, int $mod): int
 {
     assert($n >= $k);
     assert($n >= 0 && $k >= 0);

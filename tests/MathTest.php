@@ -148,21 +148,31 @@ class MathTest extends TestCase
 
     function testNCk()
     {
-        self::assertThat(nCk(31, 12, PHP_INT_MAX), self::equalTo(141120525));
-        self::assertThat(nCk(316, 10, PHP_INT_MAX), self::equalTo(2369369738881102958));
-        self::assertThat(nCk(43, 2, PHP_INT_MAX), self::equalTo(43 * 42 / 2));
-        self::assertThat(nCk(31, 12, 997), self::equalTo(141120525 % 997));
-        self::assertThat(nCk(316, 10, 1000000007), self::equalTo(2369369738881102958 % 1000000007));
-        self::assertThat(nCk(43, 2, 100), self::equalTo((43 * 42 / 2) % 100));
+        self::assertThat(nCk(31, 12), self::equalTo(141120525));
+        self::assertThat(nCk(43, 2), self::equalTo(43 * 42 / 2));
+        self::assertThat(nCk(31, 12), self::equalTo(141120525));
+        self::assertThat(nCk(0, 0), self::equalTo(1));
+        self::assertThat(nCk(389, 1), self::equalTo(389));
+        self::assertThat(nCk(389, 389), self::equalTo(1));
+    }
 
-        self::assertThat(nCk(0, 0, PHP_INT_MAX), self::equalTo(1));
-        self::assertThat(nCk(16417239, 0, PHP_INT_MAX), self::equalTo(1));
-        self::assertThat(nCk(1242353636, 1242353636, PHP_INT_MAX), self::equalTo(1));
-        self::assertThat(nCk(51936102, 1, PHP_INT_MAX), self::equalTo(51936102));
-        self::assertThat(nCk(0, 0, 1000000007), self::equalTo(1));
-        self::assertThat(nCk(16417239, 0,1000000007 ), self::equalTo(1));
-        self::assertThat(nCk(1242353636, 1242353636, 1000000007), self::equalTo(1));
-        self::assertThat(nCk(51936102, 1, 997), self::equalTo(51936102 % 997));
+    function testNCkMod()
+    {
+        self::assertThat(nCk_mod(31, 12, PHP_INT_MAX), self::equalTo(141120525));
+        self::assertThat(nCk_mod(316, 10, PHP_INT_MAX), self::equalTo(2369369738881102958));
+        self::assertThat(nCk_mod(43, 2, PHP_INT_MAX), self::equalTo(43 * 42 / 2));
+        self::assertThat(nCk_mod(31, 12, 997), self::equalTo(141120525 % 997));
+        self::assertThat(nCk_mod(316, 10, 1000000007), self::equalTo(2369369738881102958 % 1000000007));
+        self::assertThat(nCk_mod(43, 2, 100), self::equalTo((43 * 42 / 2) % 100));
+
+        self::assertThat(nCk_mod(0, 0, PHP_INT_MAX), self::equalTo(1));
+        self::assertThat(nCk_mod(16417239, 0, PHP_INT_MAX), self::equalTo(1));
+        self::assertThat(nCk_mod(1242353636, 1242353636, PHP_INT_MAX), self::equalTo(1));
+        self::assertThat(nCk_mod(51936102, 1, PHP_INT_MAX), self::equalTo(51936102));
+        self::assertThat(nCk_mod(0, 0, 1000000007), self::equalTo(1));
+        self::assertThat(nCk_mod(16417239, 0,1000000007 ), self::equalTo(1));
+        self::assertThat(nCk_mod(1242353636, 1242353636, 1000000007), self::equalTo(1));
+        self::assertThat(nCk_mod(51936102, 1, 997), self::equalTo(51936102 % 997));
     }
 
     function testNC2()
