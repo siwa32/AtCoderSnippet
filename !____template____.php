@@ -155,6 +155,28 @@ trait StdInputTrait
         }
         return $res;
     }
+
+    /**
+     * @param string|null $sep
+     * @return string|array
+     */
+    private static function readline(string $sep = null)
+    {
+        if (empty($sep)) {
+            return trim(fgets(STDIN));
+        }
+        return explode($sep, trim(fgets(STDIN)));
+    }
+
+    private static function readlineInt(string $sep = ' '): array
+    {
+        return array_map(fn ($e) => (int)$e, explode($sep, trim(fgets(STDIN))));
+    }
+
+    private static function readlineFloat(string $sep = ' '): array
+    {
+        return array_map(fn ($e) => (float)$e, explode($sep, trim(fgets(STDIN))));
+    }
 }
 
 /**
