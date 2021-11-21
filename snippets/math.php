@@ -140,6 +140,7 @@ function prime_factor(int $natural)
 function xpow(int $x, int $n): int
 {
     assert($n >= 0);
+    assert($x !== 0 || $n !== 0);
 
     $ret = 1;
     while ($n > 0) {
@@ -166,8 +167,12 @@ function xpow_mod(int $x, int $n, int $mod): int
 {
     assert($n >= 0);
     assert($mod != 0);
+    assert($x !== 0 || $n !== 0);
 
     $x %= $mod;
+    if ($x === 0) {
+        return 0;
+    }
     $ret = 1;
     while ($n > 0) {
         if ($n & 0b01) {
