@@ -144,7 +144,7 @@ class MathTest extends TestCase
         self::assertThat(xpow_mod(-2, 10, 3), self::equalTo(((-2) ** 10) % 3));
         self::assertThat(xpow_mod(-5, 21, 3), self::equalTo(((-5) ** 21) % 3));
         self::assertThat(xpow_mod(7844007021201716725, 1000000005, 1000000007), self::equalTo(6685840));
-        self::assertThat(xpow_mod(700, 0, 7), self::equalTo(0));
+        self::assertThat(xpow_mod(700, 0, 7), self::equalTo(1), "n^0=1 (n!=0) ⇒ 1≡1 (mod P, P>1)");
     }
 
     function testNCk()
