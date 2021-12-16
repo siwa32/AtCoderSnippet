@@ -29,12 +29,16 @@ class CombinationModTest extends TestCase
         ];
     }
 
+    /**
+     * @covers CombinationMod::nCk
+     * @covers CombinationMod::__construct
+     */
     public function testNCk()
     {
-        $com = new CombinationMod(self::MOD, 10000000);
+        $target = new CombinationMod(self::MOD, 10000000);
         foreach ($this->providedTestData() as $providedTestDatum) {
             [$n, $k, $expected] = $providedTestDatum;
-            self::assertThat($com->nCk($n, $k), self::equalTo($expected));
+            self::assertThat($target->nCk($n, $k), self::equalTo($expected));
         }
     }
 }

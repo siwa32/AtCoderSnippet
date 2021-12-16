@@ -16,6 +16,9 @@ class MathTest extends TestCase
         parent::tearDown();
     }
 
+    /**
+     * @covers ::intdiv_ceil
+     */
     function testIntdivCeil()
     {
         self::assertThat(intdiv_ceil(3, 2), self::equalTo(2));
@@ -30,6 +33,9 @@ class MathTest extends TestCase
         self::assertThat(intdiv_ceil(PHP_INT_MAX - 1, 1), self::equalTo(PHP_INT_MAX - 1));
     }
 
+    /**
+     * @covers ::gcd
+     */
     function testGcd()
     {
         self::assertThat(gcd(10, 2), self::equalTo(2));
@@ -41,6 +47,9 @@ class MathTest extends TestCase
         self::assertThat(gcd(0, 17386), self::equalTo(17386));
     }
 
+    /**
+     * @covers ::lcm
+     */
     function testLcm()
     {
         self::assertThat(lcm(1, 2), self::equalTo(2));
@@ -51,6 +60,9 @@ class MathTest extends TestCase
         self::assertThat(lcm(111, 157), self::equalTo(111 * 157));
     }
 
+    /**
+     * @covers ::divisor
+     */
     function testDivisor()
     {
         self::assertThat(divisor(1), self::equalTo([1]));
@@ -81,6 +93,9 @@ class MathTest extends TestCase
         self::assertThat(divisor(1000000000000003), self::equalTo($expect));
     }
 
+    /**
+     * @covers ::is_prime
+     */
     function testIsPrime_素数()
     {
         self::assertThat(is_prime(2), self::isTrue());
@@ -94,6 +109,9 @@ class MathTest extends TestCase
         self::assertThat(is_prime(3571), self::isTrue());
     }
 
+    /**
+     * @covers ::is_prime
+     */
     function testIsPrime_素数ではない()
     {
         self::assertThat(is_prime(1), self::isFalse());
@@ -105,6 +123,9 @@ class MathTest extends TestCase
         self::assertThat(is_prime(1000000000000003), self::isFalse());
     }
 
+    /**
+     * @covers ::prime_factor
+     */
     function testPrimeFactor()
     {
         self::assertThat(prime_factor(2), self::equalTo([2 => 1]));
@@ -115,6 +136,9 @@ class MathTest extends TestCase
         self::assertThat(prime_factor(1000000000000), self::equalTo([2 => 12, 5 => 12]));
     }
 
+    /**
+     * @covers ::xpow
+     */
     function testXPow()
     {
         self::assertThat(xpow(36382334237429, 0), self::equalTo(1));
@@ -130,6 +154,9 @@ class MathTest extends TestCase
         self::assertThat(xpow(-5, 21), self::equalTo((-5) ** 21));
     }
 
+    /**
+     * @covers ::xpow_mod
+     */
     function testXPowMod()
     {
         self::assertThat(xpow_mod(36382334237429, 0, 1000000007), self::equalTo(1));
@@ -147,6 +174,9 @@ class MathTest extends TestCase
         self::assertThat(xpow_mod(700, 0, 7), self::equalTo(1), "n^0=1 (n!=0) ⇒ 1≡1 (mod P, P>1)");
     }
 
+    /**
+     * @covers ::nCk
+     */
     function testNCk()
     {
         self::assertThat(nCk(31, 12), self::equalTo(141120525));
@@ -157,6 +187,9 @@ class MathTest extends TestCase
         self::assertThat(nCk(389, 389), self::equalTo(1));
     }
 
+    /**
+     * @covers ::nCk_mod
+     */
     function testNCkMod()
     {
         self::assertThat(nCk_mod(31, 12, PHP_INT_MAX), self::equalTo(141120525));
@@ -176,6 +209,9 @@ class MathTest extends TestCase
         self::assertThat(nCk_mod(51936102, 1, 997), self::equalTo(51936102 % 997));
     }
 
+    /**
+     * @covers ::nC2
+     */
     function testNC2()
     {
         self::assertThat(nC2(1), self::equalTo(0));
@@ -186,6 +222,9 @@ class MathTest extends TestCase
         self::assertThat(nC2(2 ** 32 - 1), self::equalTo((2 ** 32 - 1) * (2 ** 32 - 2) / 2));
     }
 
+    /**
+     * @covers ::nCk_mod_prime
+     */
     function testNCkModPrime()
     {
         $testCases = [
@@ -205,11 +244,17 @@ class MathTest extends TestCase
         }
     }
 
+    /**
+     * @covers ::nPk
+     */
     function testNPk()
     {
         self::markTestIncomplete();
     }
 
+    /**
+     * @covers ::factorial
+     */
     function testFactorial()
     {
         self::assertThat(factorial(1, PHP_INT_MAX), self::equalTo(1));
@@ -220,6 +265,9 @@ class MathTest extends TestCase
         self::assertThat(factorial(10000000, 1000000007), self::equalTo(682498929));
     }
 
+    /**
+     * @covers ::sum_AtoB
+     */
     function testSumAtoB()
     {
         self::assertThat(sum_AtoB(1, 10), self::equalTo(55));
@@ -230,6 +278,9 @@ class MathTest extends TestCase
         self::assertThat(sum_AtoB(1, 4294967295), self::equalTo(9223372034707292160));
     }
 
+    /**
+     * @covers ::sum_AtoB
+     */
     function testSumAtoB_開始と終了が同じ場合()
     {
         self::assertThat(sum_AtoB(1, 1), self::equalTo(1));
@@ -238,6 +289,9 @@ class MathTest extends TestCase
         self::assertThat(sum_AtoB(-1426362340, -1426362340), self::equalTo(-1426362340));
     }
 
+    /**
+     * @covers ::sum_AtoB_mod
+     */
     function testSumAtoBMod()
     {
         $mod = 10 ** 9 + 7;
@@ -249,6 +303,9 @@ class MathTest extends TestCase
         self::assertThat(sum_AtoB_mod(1, 4294967295, $mod), self::equalTo(9223372034707292160 % $mod));
     }
 
+    /**
+     * @covers ::sum_ap
+     */
     function testSumAP()
     {
         self::assertThat(sum_ap(1, 10, 2), self::equalTo(100));
@@ -256,6 +313,9 @@ class MathTest extends TestCase
         self::assertThat(sum_ap(4, 409930701, 11), self::equalTo(924237487308036654));
     }
 
+    /**
+     * @covers ::sum_ap
+     */
     function testSumAP_公差が1()
     {
         self::assertThat(sum_ap(1, 10, 1), self::equalTo(55));
@@ -266,6 +326,9 @@ class MathTest extends TestCase
         self::assertThat(sum_ap(1, 4294967295, 1), self::equalTo(9223372034707292160));
     }
 
+    /**
+     * @covers ::sum_ap
+     */
     function testSumAP_公差が0()
     {
         self::assertThat(sum_ap(1, 1000, 0), self::equalTo(1000));
@@ -273,6 +336,9 @@ class MathTest extends TestCase
         self::assertThat(sum_ap(-45, 1000, 0), self::equalTo(-45000));
     }
 
+    /**
+     * @covers ::sum_ap
+     */
     function testSumAP_公数が1()
     {
         self::assertThat(sum_ap(1, 1, 4), self::equalTo(1));
@@ -280,6 +346,9 @@ class MathTest extends TestCase
         self::assertThat(sum_ap(-3533, 1, 4), self::equalTo(-3533));
     }
 
+    /**
+     * @covers ::sum_ap
+     */
     function testSumAP_公数が0()
     {
         self::assertThat(sum_ap(1, 0, 4), self::equalTo(0));
@@ -287,6 +356,9 @@ class MathTest extends TestCase
         self::assertThat(sum_ap(-3533, 0, 4), self::equalTo(0));
     }
 
+    /**
+     * @covers ::gcd_ext
+     */
     function testGcdExt()
     {
         $x = $y = 0;
@@ -303,6 +375,9 @@ class MathTest extends TestCase
         self::assertThat($y, self::equalTo(1));
     }
 
+    /**
+     * @covers ::invert_mod
+     */
     function testInvertMod()
     {
         $testCases = [
@@ -333,6 +408,9 @@ class MathTest extends TestCase
         }
     }
 
+    /**
+     * @covers ::invert_mod
+     */
     function testInvertMod_逆元が無い場合()
     {
         self::assertThat(invert_mod(7638877640969221628, 54478), self::equalTo(0));
@@ -344,6 +422,9 @@ class MathTest extends TestCase
         self::assertThat(invert_mod(2, 3456), self::equalTo(0));
     }
 
+    /**
+     * @covers ::invert_mod_prime
+     */
     function testInvertModPrime()
     {
         $testCases = [
@@ -368,6 +449,9 @@ class MathTest extends TestCase
         }
     }
 
+    /**
+     * @covers ::invert_mod_prime
+     */
     function testInvertModPrime_逆元が無い場合()
     {
         self::assertThat(invert_mod_prime(1982, 991), self::equalTo(0));

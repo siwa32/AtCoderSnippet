@@ -20,6 +20,9 @@ class UnionFindTest extends TestCase
         parent::tearDown();
     }
 
+    /**
+     * @covers UnionFind::unite
+     */
     public function testUnite()
     {
         $this->target->unite(1,2);
@@ -35,6 +38,9 @@ class UnionFindTest extends TestCase
         self::assertThat($this->target->isSame(1, 4), self::isTrue());
     }
 
+    /**
+     * @covers UnionFind::isSame
+     */
     public function testIsSame()
     {
         self::assertThat($this->target->isSame(1, 2), self::isFalse());
@@ -43,6 +49,9 @@ class UnionFindTest extends TestCase
         self::assertThat($this->target->isSame(1, 2), self::isTrue());
     }
 
+    /**
+     * @covers UnionFind::size
+     */
     public function testSize()
     {
         self::assertThat($this->target->size(1), self::equalTo(1));
@@ -53,6 +62,9 @@ class UnionFindTest extends TestCase
         self::assertThat($this->target->size(2), self::equalTo(2));
     }
 
+    /**
+     * @covers UnionFind::clear
+     */
     public function testClear()
     {
         $this->target->unite(1,2);
@@ -66,6 +78,9 @@ class UnionFindTest extends TestCase
         self::assertThat($this->target->root(2), self::equalTo(2));
     }
 
+    /**
+     * @covers UnionFind::root
+     */
     public function testRoot()
     {
         self::assertThat($this->target->root(1), self::equalTo(1));

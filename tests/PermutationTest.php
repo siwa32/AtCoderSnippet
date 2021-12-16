@@ -16,6 +16,9 @@ class PermutationTest extends TestCase
         parent::tearDown();
     }
 
+    /**
+     * @covers ::next_permutation
+     */
     function testNextPermutation()
     {
         $expected = [
@@ -48,6 +51,9 @@ class PermutationTest extends TestCase
         self::assertThat($actual, self::equalTo([]));
     }
 
+    /**
+     * @covers ::next_permutation
+     */
     function testNextPermutation_重複要素あり()
     {
         $expected = [
@@ -71,6 +77,9 @@ class PermutationTest extends TestCase
         self::assertThat($actual, self::equalTo($expected));
     }
 
+    /**
+     * @covers ::permutations
+     */
     function testPermutations()
     {
         $expected = [
@@ -91,6 +100,9 @@ class PermutationTest extends TestCase
         self::assertThat(permutations([]), self::equalTo([]));
     }
 
+    /**
+     * @covers ::permutations
+     */
     function testPermutations_重複要素あり()
     {
         $expected = [

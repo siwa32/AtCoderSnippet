@@ -6,6 +6,9 @@ require_once __DIR__ . "/../snippets/BitSearch.php";
 
 class BitSearchTest extends TestCase
 {
+    /**
+     * @covers BitSearch::search
+     */
     public function testSearch()
     {
         $params = [];
@@ -44,6 +47,9 @@ class BitSearchTest extends TestCase
         self::assertThat($params, self::equalTo($expected));
     }
 
+    /**
+     * @covers BitSearch::search
+     */
     public function testSearch_チェックするパターンを選択()
     {
         $params = [];

@@ -7,6 +7,9 @@ require_once __DIR__ . "/../snippets/AdjacencyListGraph.php";
 
 class DijkstraTest extends TestCase
 {
+    /**
+     * @covers Dijkstra::getStart
+     */
     public function testGetStart()
     {
         $g = new AdjacencyListGraph(false);
@@ -16,6 +19,9 @@ class DijkstraTest extends TestCase
         self::assertThat($target->getStart(), self::equalTo(1));
     }
 
+    /**
+     * @covers Dijkstra::calc
+     */
     public function testCalc_戻り値の型はDijkstra()
     {
         $g = new AdjacencyListGraph(false);
@@ -25,6 +31,11 @@ class DijkstraTest extends TestCase
         self::assertThat($target, self::isInstanceOf(Dijkstra::class));
     }
 
+    /**
+     * @covers Dijkstra::calc
+     * @covers Dijkstra::updateCost
+     * @covers Dijkstra::__construct
+     */
     public function testCalc()
     {
         $g = new AdjacencyListGraph(false);
@@ -72,6 +83,11 @@ class DijkstraTest extends TestCase
         self::assertThat($target->getPath(0), self::equalTo([0]));
     }
 
+    /**
+     * @covers Dijkstra::calc
+     * @covers Dijkstra::updateCost
+     * @covers Dijkstra::__construct
+     */
     public function testCalc_有向グラフの場合()
     {
         $g = new AdjacencyListGraph(true);
@@ -117,6 +133,11 @@ class DijkstraTest extends TestCase
         self::assertThat($target->getPath(0), self::equalTo([0]));
     }
 
+    /**
+     * @covers Dijkstra::calc
+     * @covers Dijkstra::updateCost
+     * @covers Dijkstra::__construct
+     */
     public function testCalc_たどり着けないノードの場合()
     {
         $g = new AdjacencyListGraph(true);
