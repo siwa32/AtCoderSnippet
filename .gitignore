@@ -1,2 +1,4 @@
 /vendor/
 /measure/measure_test.php
+/coverage/
+/.phpunit.cache/

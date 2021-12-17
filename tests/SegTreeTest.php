@@ -6,6 +6,10 @@ require_once __DIR__ . "/../snippets/SegTree.php";
 
 class SegTreeTest extends TestCase
 {
+    /**
+     * @covers SegTree::get
+     * @covers SegTree::set
+     */
     public function testSetGet()
     {
         $segTree = new SegTree(10);
@@ -17,6 +21,9 @@ class SegTreeTest extends TestCase
         self::assertThat($segTree->get(9), self::equalTo(90));
     }
 
+    /**
+     * @covers SegTree::sum
+     */
     public function testSum()
     {
         $segTree = new SegTree(10);
@@ -38,6 +45,9 @@ class SegTreeTest extends TestCase
         self::assertThat($segTree->sum(9, 10), self::equalTo(90));
     }
 
+    /**
+     * @covers SegTree::set
+     */
     public function testSet_構築しない()
     {
         $segTree = new SegTree(10);
@@ -53,6 +63,9 @@ class SegTreeTest extends TestCase
         self::assertThat($segTree->min(0, 10), self::equalTo(0));
     }
 
+    /**
+     * @covers SegTree::build
+     */
     public function testBuild()
     {
         $segTree = new SegTree(10);
@@ -66,6 +79,9 @@ class SegTreeTest extends TestCase
         self::assertThat($segTree->min(0, 10), self::equalTo(0));
     }
 
+    /**
+     * @covers SegTree::max
+     */
     public function testMax()
     {
         $segTree = new SegTree(10);
@@ -88,6 +104,9 @@ class SegTreeTest extends TestCase
         self::assertThat($segTree->max(9, 10), self::equalTo(-10));
     }
 
+    /**
+     * @covers SegTree::min
+     */
     public function testMin()
     {
         $segTree = new SegTree(10);
@@ -110,6 +129,9 @@ class SegTreeTest extends TestCase
         self::assertThat($segTree->min(9, 10), self::equalTo(-10));
     }
 
+    /**
+     * @covers SegTree::add
+     */
     public function testAdd()
     {
         $segTree = new SegTree(10);
@@ -143,6 +165,9 @@ class SegTreeTest extends TestCase
         self::assertThat($segTree->max(7, 10), self::equalTo(3));
     }
 
+    /**
+     * @covers SegTree::update
+     */
     public function testUpdate()
     {
         $segTree = new SegTree(10);

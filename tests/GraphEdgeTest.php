@@ -6,6 +6,20 @@ require_once __DIR__ . "/../snippets/AdjacencyListGraph.php";
 
 class GraphEdgeTest extends TestCase
 {
+    /**
+     * @covers GraphEdge::__construct
+     */
+    public function test__construct(): void
+    {
+        $target = new GraphEdge(1, 2, 3);
+        self::assertThat($target->from, self::equalTo(1));
+        self::assertThat($target->to, self::equalTo(2));
+        self::assertThat($target->cost, self::equalTo(3));
+    }
+
+    /**
+     * @covers GraphEdge::sortByCost
+     */
     public function testSortByCost()
     {
         $edges = [
@@ -37,6 +51,9 @@ class GraphEdgeTest extends TestCase
         self::assertThat($edges[4]->to, self::equalTo(5));
     }
 
+    /**
+     * @covers GraphEdge::sortByCost
+     */
     public function testSortByCost_降順()
     {
         $edges = [
@@ -68,6 +85,9 @@ class GraphEdgeTest extends TestCase
         self::assertThat($edges[4]->to, self::equalTo(2));
     }
 
+    /**
+     * @covers GraphEdge::sortByCost
+     */
     public function testSortByCost_キーを維持()
     {
         $edges = [
@@ -99,6 +119,9 @@ class GraphEdgeTest extends TestCase
         self::assertThat($edges['d']->to, self::equalTo(5));
     }
 
+    /**
+     * @covers GraphEdge::sortByCost
+     */
     public function testSortByCost_キーを維持しない()
     {
         $edges = [

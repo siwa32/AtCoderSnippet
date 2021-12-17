@@ -20,6 +20,9 @@ class TopologicalSortTest extends TestCase
         parent::tearDown();
     }
 
+    /**
+     * @covers TopologicalSort::clear
+     */
     public function testClear()
     {
         $this->target = new TopologicalSort();
@@ -29,6 +32,9 @@ class TopologicalSortTest extends TestCase
         self::assertThat($this->target->sort(), self::equalTo([]));
     }
 
+    /**
+     * @covers TopologicalSort::sort
+     */
     public function testSort()
     {
         $conditions = [
@@ -48,6 +54,9 @@ class TopologicalSortTest extends TestCase
         }
     }
 
+    /**
+     * @covers TopologicalSort::sort
+     */
     public function testSort_順序の制約が無い項目がある場合()
     {
         $conditions = [
@@ -71,6 +80,9 @@ class TopologicalSortTest extends TestCase
         self::assertThat(in_array(6, $actual), self::isTrue());
     }
 
+    /**
+     * @covers TopologicalSort::sort
+     */
     public function testSort_項目が文字列()
     {
         $conditions = [
@@ -90,6 +102,9 @@ class TopologicalSortTest extends TestCase
         }
     }
 
+    /**
+     * @covers TopologicalSort::sort
+     */
     public function testSort_制約の順序に出来ない場合はnullを返す()
     {
         $conditions = [

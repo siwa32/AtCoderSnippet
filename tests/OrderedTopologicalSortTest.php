@@ -20,6 +20,9 @@ class OrderedTopologicalSortTest extends TestCase
         parent::tearDown();
     }
 
+    /**
+     * @covers OrderedTopologicalSort::clear
+     */
     public function testClear()
     {
         $this->target->addItem(1);
@@ -28,6 +31,9 @@ class OrderedTopologicalSortTest extends TestCase
         self::assertThat($this->target->sort(), self::equalTo([]));
     }
 
+    /**
+     * @covers OrderedTopologicalSort::sort
+     */
     public function testSort_可能な範囲で昇順()
     {
         $conditions = [
@@ -48,6 +54,9 @@ class OrderedTopologicalSortTest extends TestCase
         self::assertThat($actual, self::equalTo($expected));
     }
 
+    /**
+     * @covers OrderedTopologicalSort::sort
+     */
     public function testSort_可能な範囲で降順()
     {
         $conditions = [
@@ -68,6 +77,9 @@ class OrderedTopologicalSortTest extends TestCase
         self::assertThat($actual, self::equalTo($expected));
     }
 
+    /**
+     * @covers OrderedTopologicalSort::sort
+     */
     public function testSort_順序の制約が無い項目がある場合_可能な範囲で昇順()
     {
         $conditions = [
@@ -90,6 +102,9 @@ class OrderedTopologicalSortTest extends TestCase
         self::assertThat($actual, self::equalTo($expected));
     }
 
+    /**
+     * @covers OrderedTopologicalSort::sort
+     */
     public function testSort_順序の制約が無い項目がある場合_可能な範囲で降順()
     {
         $conditions = [
@@ -112,6 +127,9 @@ class OrderedTopologicalSortTest extends TestCase
         self::assertThat($actual, self::equalTo($expected));
     }
 
+    /**
+     * @covers OrderedTopologicalSort::sort
+     */
     public function testSort_項目が文字列_可能な範囲で昇順()
     {
         $conditions = [
@@ -132,6 +150,9 @@ class OrderedTopologicalSortTest extends TestCase
         self::assertThat($actual, self::equalTo($expected));
     }
 
+    /**
+     * @covers OrderedTopologicalSort::sort
+     */
     public function testSort_項目が文字列_可能な範囲で降順()
     {
         $conditions = [
@@ -152,6 +173,9 @@ class OrderedTopologicalSortTest extends TestCase
         self::assertThat($actual, self::equalTo($expected));
     }
 
+    /**
+     * @covers OrderedTopologicalSort::sort
+     */
     public function testSort_制約の順序に出来ない場合はnullを返す()
     {
         $conditions = [
