@@ -6,6 +6,8 @@
  */
 class WarshallFloyd
 {
+    public const INF_COST = PHP_INT_MAX - 1;
+
     private int $size;
     private bool $isDirected;
     private array $distance;
@@ -18,7 +20,7 @@ class WarshallFloyd
     {
         $this->size = $size;
         $this->isDirected = $isDirected;
-        $this->distance = array_fill(0, $size, array_fill(0, $size, null));
+        $this->distance = array_fill(0, $size, array_fill(0, $size, self::INF_COST));
     }
 
     public function isDirected(): bool
@@ -36,7 +38,7 @@ class WarshallFloyd
      * @param int $to
      * @param int $cost コスト
      */
-    public function addEdge(int $from, int $to, $cost = 1): void
+    public function addEdge(int $from, int $to, int $cost = 1): void
     {
         if ($from < 0 || $this->size <= $from) {
             throw new InvalidArgumentException();
@@ -59,38 +61,24 @@ class WarshallFloyd
         }
         $this->path = [];
         for ($k = 0; $k < $this->size; ++$k) {
+            $dk = &$this->distance[$k];
             for ($i = 0; $i < $this->size; ++$i) {
+                $di = &$this->distance[$i];
                 for ($j = 0; $j < $this->size; ++$j) {
-                    $ij = $this->distance[$i][$j];
-                    $ik = $this->distance[$i][$k];
-                    $kj = $this->distance[$k][$j];
-                    if ($ij === null && $ik !== null && $kj !== null) {
-                        $this->distance[$i][$j] = $ik + $kj;
+                    $ij = $di[$j];
+                    $ik = $di[$k];
+                    $kj = $dk[$j];
+                    $this->path[$i][$j] = $j;
+                    if ($ij > $ik + $kj) {
+                        $di[$j] = $ik + $kj;
                         $this->path[$i][$j] = $k;
-                    }
-                    if ($ij !== null && ($ik === null || $kj === null)) {
-                        $this->distance[$i][$j] = $ij;
-                        if (!isset($this->path[$i][$j])) {
-                            $this->path[$i][$j] = $j;
-                        }
-                    }
-                    if ($ij !== null && $ik !== null && $kj !== null) {
-                        if ($ij > $ik + $kj) {
-                            $this->distance[$i][$j] = $ik + $kj;
-                            $this->path[$i][$j] = $k;
-                        } else {
-                            $this->distance[$i][$j] = $ij;
-                            if (!isset($this->path[$i][$j])) {
-                                $this->path[$i][$j] = $j;
-                            }
-                        }
                     }
                 }
             }
         }
     }
 
-    public function getCost(int $from, int $to)
+    public function getCost(int $from, int $to): int
     {
         if ($from < 0 || $this->size <= $from) {
             throw new InvalidArgumentException();
@@ -98,7 +86,18 @@ class WarshallFloyd
         if ($to < 0 || $this->size <= $to) {
             throw new InvalidArgumentException();
         }
-        return $this->distance[$from][$to] ?? false;
+        return $this->distance[$from][$to];
+    }
+
+    public function isExistRoute(int $from, int $to): bool
+    {
+        if ($from < 0 || $this->size <= $from) {
+            throw new InvalidArgumentException();
+        }
+        if ($to < 0 || $this->size <= $to) {
+            throw new InvalidArgumentException();
+        }
+        return $this->distance[$from][$to] < self::INF_COST;
     }
 
     public function getPath(int $from, int $to): array
