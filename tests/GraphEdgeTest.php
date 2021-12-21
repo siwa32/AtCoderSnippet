@@ -20,7 +20,7 @@ class GraphEdgeTest extends TestCase
     /**
      * @covers GraphEdge::sortByCost
      */
-    public function testSortByCost()
+    public function testSortByCost(): void
     {
         $edges = [
             new GraphEdge(1, 2, 1),
@@ -54,7 +54,7 @@ class GraphEdgeTest extends TestCase
     /**
      * @covers GraphEdge::sortByCost
      */
-    public function testSortByCost_降順()
+    public function testSortByCost_降順(): void
     {
         $edges = [
             new GraphEdge(1, 2, 1),
@@ -88,7 +88,7 @@ class GraphEdgeTest extends TestCase
     /**
      * @covers GraphEdge::sortByCost
      */
-    public function testSortByCost_キーを維持()
+    public function testSortByCost_キーを維持(): void
     {
         $edges = [
             'a' => new GraphEdge(1, 2, 1),
@@ -122,7 +122,7 @@ class GraphEdgeTest extends TestCase
     /**
      * @covers GraphEdge::sortByCost
      */
-    public function testSortByCost_キーを維持しない()
+    public function testSortByCost_キーを維持しない(): void
     {
         $edges = [
             'a' => new GraphEdge(1, 2, 1),

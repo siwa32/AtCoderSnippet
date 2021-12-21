@@ -9,7 +9,7 @@ class BinarySearchTest extends TestCase
     /**
      * @covers BinarySearch::searchR
      */
-    public function testSearchR()
+    public function testSearchR(): void
     {
         $list = [1, 3, 6, 10, 10, 17];
         $actual = BinarySearch::searchR(0, count($list), static function (int $p) use(&$list): bool {
@@ -31,7 +31,7 @@ class BinarySearchTest extends TestCase
     /**
      * @covers BinarySearch::searchR
      */
-    public function testSearchR_区間逆の場合()
+    public function testSearchR_区間逆の場合(): void
     {
         $list = [1, 3, 6, 10, 10, 17];
         $actual = BinarySearch::searchR(count($list) - 1, -1, static function (int $p) use(&$list): bool {
@@ -53,7 +53,7 @@ class BinarySearchTest extends TestCase
     /**
      * @covers BinarySearch::searchR
      */
-    public function testSearchR_見つからない場合()
+    public function testSearchR_見つからない場合(): void
     {
         $list = [1, 3, 6, 10, 10, 17];
         $actual = BinarySearch::searchR(0, count($list), static function (int $p) use(&$list): bool {
@@ -65,7 +65,7 @@ class BinarySearchTest extends TestCase
     /**
      * @covers BinarySearch::searchR
      */
-    public function testSearchR_区間逆で見つからない場合()
+    public function testSearchR_区間逆で見つからない場合(): void
     {
         $list = [1, 3, 6, 10, 10, 17];
         $actual = BinarySearch::searchR(count($list) - 1, -1, static function (int $p) use(&$list): bool {
@@ -77,7 +77,7 @@ class BinarySearchTest extends TestCase
     /**
      * @covers BinarySearch::searchR
      */
-    public function testSearchR_探索対象が一つの場合()
+    public function testSearchR_探索対象が一つの場合(): void
     {
         $list = [1, 3, 6, 10, 10, 17];
         $actual = BinarySearch::searchR(0, 1, static function (int $p) use(&$list): bool {
@@ -94,7 +94,7 @@ class BinarySearchTest extends TestCase
     /**
      * @covers BinarySearch::searchR
      */
-    public function testSearchR_区間逆で探索対象が一つの場合()
+    public function testSearchR_区間逆で探索対象が一つの場合(): void
     {
         $list = [1, 3, 6, 10, 10, 17];
         $actual = BinarySearch::searchR(0, -1, static function (int $p) use(&$list): bool {
@@ -111,7 +111,7 @@ class BinarySearchTest extends TestCase
     /**
      * @covers BinarySearch::searchL
      */
-    public function testSearchL()
+    public function testSearchL(): void
     {
         $list = [1, 3, 6, 10, 10, 17];
         $actual = BinarySearch::searchL(0, count($list), static function (int $p) use(&$list): bool {
@@ -133,7 +133,7 @@ class BinarySearchTest extends TestCase
     /**
      * @covers BinarySearch::searchL
      */
-    public function testSearchL_区間逆の場合()
+    public function testSearchL_区間逆の場合(): void
     {
         $list = [1, 3, 6, 10, 10, 17];
         $actual = BinarySearch::searchL(count($list) - 1, -1, static function (int $p) use(&$list): bool {
@@ -155,7 +155,7 @@ class BinarySearchTest extends TestCase
     /**
      * @covers BinarySearch::searchL
      */
-    public function testSearchL_見つからない場合()
+    public function testSearchL_見つからない場合(): void
     {
         $list = [1, 3, 6, 10, 10, 17];
         $actual = BinarySearch::searchL(0, count($list), static function (int $p) use(&$list): bool {
@@ -167,7 +167,7 @@ class BinarySearchTest extends TestCase
     /**
      * @covers BinarySearch::searchL
      */
-    public function testSearchL_区間逆で見つからない場合()
+    public function testSearchL_区間逆で見つからない場合(): void
     {
         $list = [1, 3, 6, 10, 10, 17];
         $actual = BinarySearch::searchL(count($list) - 1, -1, static function (int $p) use(&$list): bool {
@@ -179,7 +179,7 @@ class BinarySearchTest extends TestCase
     /**
      * @covers BinarySearch::searchL
      */
-    public function testSearchL_探索対象が一つの場合()
+    public function testSearchL_探索対象が一つの場合(): void
     {
         $list = [1, 3, 6, 10, 10, 17];
         $actual = BinarySearch::searchL(0, 1, static function (int $p) use(&$list): bool {
@@ -196,7 +196,7 @@ class BinarySearchTest extends TestCase
     /**
      * @covers BinarySearch::searchL
      */
-    public function testSearchL_区間逆で探索対象が一つの場合()
+    public function testSearchL_区間逆で探索対象が一つの場合(): void
     {
         $list = [1, 3, 6, 10, 10, 17];
         $actual = BinarySearch::searchL(0, -1, static function (int $p) use(&$list): bool {
@@ -213,7 +213,7 @@ class BinarySearchTest extends TestCase
     /**
      * @covers ::array_binary_search
      */
-    public function testArrayBinarySearch()
+    public function testArrayBinarySearch(): void
     {
         $list = [1, 3, 6, 10];
         self::assertThat(array_binary_search($list, 3), self::equalTo(1));
@@ -224,7 +224,7 @@ class BinarySearchTest extends TestCase
     /**
      * @covers ::array_binary_search
      */
-    public function testArrayBinarySearch_要素一つの場合()
+    public function testArrayBinarySearch_要素一つの場合(): void
     {
         $list = [1];
         self::assertThat(array_binary_search($list, 1), self::equalTo(0));
@@ -235,7 +235,7 @@ class BinarySearchTest extends TestCase
     /**
      * @covers ::array_binary_search
      */
-    public function testArrayBinarySearch_要素二つの場合()
+    public function testArrayBinarySearch_要素二つの場合(): void
     {
         $list = [1, 3];
         self::assertThat(array_binary_search($list, 1), self::equalTo(0));
@@ -247,7 +247,7 @@ class BinarySearchTest extends TestCase
     /**
      * @covers ::array_binary_search
      */
-    public function testArrayBinarySearch_複数の要素に一致する場合()
+    public function testArrayBinarySearch_複数の要素に一致する場合(): void
     {
         $list = [1, 3, 3, 10];
         self::assertThat(array_binary_search($list, 3), self::lessThanOrEqual(2));
@@ -257,7 +257,7 @@ class BinarySearchTest extends TestCase
     /**
      * @covers ::array_binary_search
      */
-    public function testArrayBinarySearch_見つからない場合()
+    public function testArrayBinarySearch_見つからない場合(): void
     {
         $list = [1, 3, 6, 10];
         self::assertThat(array_binary_search($list, 0), self::isFalse());
@@ -268,7 +268,7 @@ class BinarySearchTest extends TestCase
     /**
      * @covers ::array_binary_rsearch
      */
-    public function testArrayBinaryRSearch()
+    public function testArrayBinaryRSearch(): void
     {
         $list = [10, 8, 4, 2];
         self::assertThat(array_binary_rsearch($list, 4), self::equalTo(2));
@@ -279,7 +279,7 @@ class BinarySearchTest extends TestCase
     /**
      * @covers ::array_binary_rsearch
      */
-    public function testArrayBinaryRSearch_要素一つの場合()
+    public function testArrayBinaryRSearch_要素一つの場合(): void
     {
         $list = [10];
         self::assertThat(array_binary_rsearch($list, 10), self::equalTo(0));
@@ -290,7 +290,7 @@ class BinarySearchTest extends TestCase
     /**
      * @covers ::array_binary_rsearch
      */
-    public function testArrayBinaryRSearch_要素二つの場合()
+    public function testArrayBinaryRSearch_要素二つの場合(): void
     {
         $list = [10, 4];
         self::assertThat(array_binary_rsearch($list, 10), self::equalTo(0));
@@ -302,7 +302,7 @@ class BinarySearchTest extends TestCase
     /**
      * @covers ::array_binary_rsearch
      */
-    public function testArrayBinaryRSearch_複数要素が一致する場合()
+    public function testArrayBinaryRSearch_複数要素が一致する場合(): void
     {
         $list = [10, 8, 8, 2];
         self::assertThat(array_binary_rsearch($list, 8), self::lessThanOrEqual(2));
@@ -312,7 +312,7 @@ class BinarySearchTest extends TestCase
     /**
      * @covers ::array_binary_rsearch
      */
-    public function testArrayBinaryRSearch_見つからない場合()
+    public function testArrayBinaryRSearch_見つからない場合(): void
     {
         $list = [10, 8, 4, 2];
         self::assertThat(array_binary_rsearch($list, 1), self::isFalse());

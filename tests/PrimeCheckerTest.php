@@ -6,22 +6,12 @@ require_once __DIR__ . "/../snippets/PrimeChecker.php";
 
 class PrimeCheckerTest extends TestCase
 {
-    function setUp(): void
-    {
-        parent::setUp();
-    }
-
-    function tearDown(): void
-    {
-        parent::tearDown();
-    }
-
     /**
      * @covers PrimeChecker::isPrime
      * @covers PrimeChecker::__construct
      * @covers PrimeChecker::makeInit
      */
-    public function testIsPrime_素数()
+    public function testIsPrime_素数(): void
     {
         $target = new PrimeChecker(5000000);
 
@@ -39,7 +29,7 @@ class PrimeCheckerTest extends TestCase
     /**
      * @covers PrimeChecker::isPrime
      */
-    public function testIsPrime_素数ではない()
+    public function testIsPrime_素数ではない(): void
     {
         $target = new PrimeChecker(5000000);
 
@@ -54,7 +44,7 @@ class PrimeCheckerTest extends TestCase
     /**
      * @covers PrimeChecker::primes
      */
-    public function testPrimes_1000以下の素数()
+    public function testPrimes_1000以下の素数(): void
     {
         $target = new PrimeChecker(1000);
 
@@ -76,7 +66,7 @@ class PrimeCheckerTest extends TestCase
     /**
      * @covers PrimeChecker::primes
      */
-    public function testPrimes_2以下の素数()
+    public function testPrimes_2以下の素数(): void
     {
         $target = new PrimeChecker(2);
 
@@ -89,7 +79,7 @@ class PrimeCheckerTest extends TestCase
     /**
      * @covers PrimeChecker::primeFactor
      */
-    public function testPrimeFactor_10000以下()
+    public function testPrimeFactor_10000以下(): void
     {
         $target = new PrimeChecker(10000);
 
@@ -104,7 +94,7 @@ class PrimeCheckerTest extends TestCase
     /**
      * @covers PrimeChecker::primeFactor
      */
-    public function testPrimeFactor_10000000以下()
+    public function testPrimeFactor_10000000以下(): void
     {
         $target = new PrimeChecker(10000000);
 
