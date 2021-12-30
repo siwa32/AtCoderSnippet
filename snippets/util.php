@@ -78,19 +78,21 @@ function array_count_if(array $list, $valueOrCompare): int
  * </code>
  *
  * @param array $list 昇順ソート済配列
- * @param $key
+ * @param mixed $key
  * @param int $start 配列の検索範囲開始位置
+ * @param int $end 配列の検索範囲終了位置
+ *      nullの場合は `count($list) - 1`
  * @return false|int 該当要素のキー値
  *      $key 以上の要素が無い場合はfalse
  */
-function lower_bound(array $list, $key, int $start = 0)
+function lower_bound(array $list, $key, int $start = 0, int $end = null)
 {
     $l = $start;
-    $r = count($list);
-    if ($r === 0) {
+    $r = $end ?? count($list) - 1;
+    if ($r < $l) {
         return false;// 空配列
     }
-    if ($list[$r - 1] < $key || $r <= $l) {
+    if ($list[$r] < $key ) {
         // $key以上の要素無し
         return false;
     }

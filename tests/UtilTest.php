@@ -194,6 +194,17 @@ class UtilTest extends TestCase
     }
 
     /**
+     * @covers ::lower_bound
+     */
+    function testLowerBound_0indexでは無い配列の場合()
+    {
+        self::assertThat(lower_bound([4 => 1, 5 => 3, 6 => 5, 7 => 5, 8 => 6, 9 => 10], 5, 4, 9), self::equalTo(6));
+        self::assertThat(lower_bound([-10 => 1, -9 => 3, -8 => 5, -7 => 5, -6 => 6, -5 => 10], 5, -10, -5), self::equalTo(-8));
+        self::assertThat(lower_bound([-10 => 1], 1, -10, -10), self::equalTo(-10));
+        self::assertThat(lower_bound([-10 => 1], 2, -10, -10), self::isFalse());
+    }
+
+    /**
      * @covers ::upper_bound
      */
     function testUpperBound()
