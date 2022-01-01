@@ -3,6 +3,8 @@
  *
  */
 
+namespace abc000;
+
 if (PHP_OS !== 'Linux') {
     // ローカル実行時
     ini_set('memory_limit', '512M');
