@@ -228,6 +228,54 @@ function pp(...$values): void
 }
 
 /**
+ * デバッグ用出力
+ * @param int[] ...$values
+ */
+function pb(...$values): void
+{
+    $o = '';
+    $sep = '';
+    foreach ($values as $value) {
+        $o .= $sep . sprintf("%0b", $value);
+        $sep = ', ';
+    }
+    $o .= (empty($sep) ? '' : PHP_EOL);
+    fwrite(DBGOUT, $o);
+}
+
+/**
+ * デバッグ用出力
+ * @param int[] ...$values
+ */
+function pb8(...$values): void
+{
+    $o = '';
+    $sep = '';
+    foreach ($values as $value) {
+        $o .= $sep . sprintf("%08b", $value);
+        $sep = ', ';
+    }
+    $o .= (empty($sep) ? '' : PHP_EOL);
+    fwrite(DBGOUT, $o);
+}
+
+/**
+ * デバッグ用出力
+ * @param int[] ...$values
+ */
+function pb16(...$values): void
+{
+    $o = '';
+    $sep = '';
+    foreach ($values as $value) {
+        $o .= $sep . sprintf("%016b", $value);
+        $sep = ', ';
+    }
+    $o .= (empty($sep) ? '' : PHP_EOL);
+    fwrite(DBGOUT, $o);
+}
+
+/**
  * 値の入れ替え
  * @param &$a
  * @param &$b
