@@ -23,8 +23,13 @@ class Dijkstra
 
         $queue = new SplPriorityQueue();
         $queue->insert([$start, null], 0);
+        $checked = [];
         while (!$queue->isEmpty()) {
             $current = $queue->extract();
+            if ($checked[$current[0]] ?? false) {
+                continue;
+            }
+            $checked[$current[0]] = true;
 
             $edges = $graph->getEdges($current[0]);// 隣のノード
             foreach ($edges as $edge) {

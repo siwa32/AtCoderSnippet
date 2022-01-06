@@ -135,7 +135,7 @@ class GraphEdge
  *
  * @param AdjacencyListGraph $graph
  * @param int $start
- * @param callable $fn
+ * @param callable|null $fn
  */
 function bfs(AdjacencyListGraph $graph, int $start, callable $fn = null)
 {
